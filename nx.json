@@ -40,8 +40,17 @@
     "lint": {
       "cache": true
     },
-    "prettier": {
-      "cache": true
+    "release-patch": {
+      "dependsOn": ["test"],
+      "cache": false
+    },
+    "release-minor": {
+      "dependsOn": ["test"],
+      "cache": false
+    },
+    "release-major": {
+      "dependsOn": ["test"],
+      "cache": false
     }
   },
   "defaultBase": "main",
