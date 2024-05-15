@@ -1,6 +1,6 @@
 {
   "name": "npm-status-messenger",
-  "version": "0.3.39",
+  "version": "0.3.40",
   "description": "An NPM status messenger",
   "main": "dist/startup.js",
   "types": "dist/startup.d.ts",
