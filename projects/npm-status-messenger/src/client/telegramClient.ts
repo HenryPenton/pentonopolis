@@ -22,8 +22,8 @@ export class TelegramClient implements IClient {
       headers: {
         "Content-Type": "application/json"
       },
-      method: "POST",
-      body: JSON.stringify({ chat_id: telegramChatId, text: message })
+      body: JSON.stringify({ chat_id: telegramChatId, text: message }),
+      method: "POST"
     });
   };
 }
