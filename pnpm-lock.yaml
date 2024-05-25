@@ -100,8 +100,8 @@ importers:
         specifier: 12.1.0
         version: 12.1.0
       config-captain:
-        specifier: 1.7.3
-        version: 1.7.3
+        specifier: workspace:*
+        version: link:../config-captain
     devDependencies:
       '@stryker-mutator/core':
         specifier: 8.x
@@ -1192,9 +1192,6 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
-
-  config-captain@1.7.3:
-    resolution: {integrity: sha512-iGWrhP89Jc/2kc8mGwqMFRHSYlsiUYDLJXuyEZpWXgAC5RnFnPgvxDiNKtNyDZcvcSi9gFWUsX3ZLkJbebG8Qg==}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -3802,8 +3799,6 @@ snapshots:
   commander@12.1.0: {}
 
   concat-map@0.0.1: {}
-
-  config-captain@1.7.3: {}
 
   convert-source-map@2.0.0: {}
 
