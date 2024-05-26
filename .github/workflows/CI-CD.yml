@@ -15,7 +15,8 @@ on:
             "npm-status-messenger",
             "moviebot-telegram",
             "who-owes-who",
-            "word-frequency-counter"
+            "word-frequency-counter",
+            "@henrypenton/uuid"
           ]
       deployment-type:
         description: "Type of deployment to do"
