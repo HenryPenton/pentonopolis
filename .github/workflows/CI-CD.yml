@@ -83,18 +83,19 @@ jobs:
           path: |
             **/node_modules
           key: ${{ env.npm_dependencies_cache_key }}
-
+      - run: |
+          pnpm test:coverage
+          pnpm prettier:check
+          pnpm lint:check
       - run: |
           affected_base=$(git describe --tags --abbrev=0)
           pnpx nx affected -t release-patch --base=$affected_base --head=HEAD --parallel=false
-          pnpx nx affected -t test:coverage --base=$affected_base --head=HEAD --parallel=false
           pnpx nx affected -t tarball --base=$affected_base --head=HEAD --parallel=false
         name: Continuous build
         if: ${{ github.event_name == 'push' }}
 
       - run: |
           pnpx nx release-${{ inputs.deployment-type }} ${{ inputs.package-name }}
-          pnpx nx test:coverage ${{ inputs.package-name }}
           pnpx nx tarball ${{ inputs.package-name }}
         name: Requested build
         if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -148,72 +149,9 @@ jobs:
           path: |
             .nx
           key: ${{ env.nx_cache_key }}
-  formatting:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: latest
-
-      - name: Generate nx cache key
-        run: |
-          nx_cache_key=${{ runner.os }}-formatting-nx-${{ hashFiles('nx.json') }}
-          npm_dependencies_cache_key=formatting-npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
-
-          echo "nx_cache_key=$nx_cache_key" >> "$GITHUB_ENV"
-          echo "npm_dependencies_cache_key=$npm_dependencies_cache_key" >> "$GITHUB_ENV"
-          echo ${{ github.run_id }}
-
-      - name: Restore cached npm dependencies
-        id: cache_dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            **/node_modules
-          key: ${{ env.npm_dependencies_cache_key }}
-
-      - name: Restore nx cache
-        id: cache_nx
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            .nx
-          key: ${{ env.nx_cache_key }}
-
-      - name: install dependencies
-        if: steps.cache_dependencies.outputs.cache-hit != 'true'
-        run: pnpm install --frozen-lockfile
-
-      - name: Formatting
-        run: |
-          pnpm prettier:check
-          pnpm lint:check
-
-      - name: Delete existing nx cache
-        run: |
-          gh extension install actions/gh-actions-cache
-          gh actions-cache delete ${{ env.nx_cache_key }} --confirm || true
-        if: steps.cache_nx.outputs.cache-hit == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cache nx
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            .nx
-          key: ${{ env.nx_cache_key }}
   version-bump:
     runs-on: ubuntu-latest
-    needs: [test-and-build, formatting]
+    needs: [test-and-build]
     steps:
       - uses: actions/checkout@v4
         with:
