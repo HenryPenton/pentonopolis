@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "node build.mjs",
+    "postbuild": "tsc",
     "dependencies:check": "pnpm outdated --json > outdated.json || true",
     "lint:check": "eslint --no-fix . --ext .ts",
     "lint": "eslint . --ext .ts",
@@ -54,6 +55,7 @@
     "@stryker-mutator/jest-runner": "^8.x",
     "@stryker-mutator/typescript-checker": "8.x",
     "@swc/core": "1.x",
+    "esbuild": "0.21.4",
     "@swc/jest": "0.2.x",
     "@types/node": "20.x",
     "@types/uuid": "9.x",
