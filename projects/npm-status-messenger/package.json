@@ -69,7 +69,6 @@
     "@stryker-mutator/typescript-checker": "8.x",
     "@swc/core": "1.x",
     "@swc/jest": "0.x",
-    "@types/uuid": "9.x",
     "jest": "29.x",
     "esbuild": "0.21.4",
     "typescript": "5.x"

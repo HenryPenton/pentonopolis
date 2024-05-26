@@ -121,9 +121,6 @@ importers:
       '@swc/jest':
         specifier: 0.x
         version: 0.2.36(@swc/core@1.5.7)
-      '@types/uuid':
-        specifier: 9.x
-        version: 9.0.8
       esbuild:
         specifier: 0.21.4
         version: 0.21.4
@@ -136,9 +133,9 @@ importers:
 
   projects/who-owes-who:
     dependencies:
-      uuid:
-        specifier: 9.0.1
-        version: 9.0.1
+      '@henrypenton/uuid':
+        specifier: workspace:*
+        version: link:../../shared/uuid
     devDependencies:
       '@stryker-mutator/core':
         specifier: 8.x
@@ -155,9 +152,6 @@ importers:
       '@swc/jest':
         specifier: 0.2.x
         version: 0.2.36(@swc/core@1.5.7)
-      '@types/uuid':
-        specifier: 9.x
-        version: 9.0.8
       esbuild:
         specifier: 0.21.4
         version: 0.21.4
@@ -189,9 +183,6 @@ importers:
       '@swc/jest':
         specifier: 0.2.x
         version: 0.2.36(@swc/core@1.5.7)
-      '@types/uuid':
-        specifier: 9.x
-        version: 9.0.8
       esbuild:
         specifier: ^0.21.4
         version: 0.21.4

@@ -1,5 +1,5 @@
+import { generateNewId } from "@henrypenton/uuid";
 import { PaymentSetDoesNotExistError } from "../exceptions/Payment";
-import { generateNewId } from "../generateUUID/uuid";
 import { DebtMap } from "../interfaces/debt";
 import {
   PaymentMap,
