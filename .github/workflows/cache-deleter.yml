@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Delete existing nx cache
+      - name: Delete existing caches
         run: |
           filename="cache-list"
           gh extension install actions/gh-actions-cache
