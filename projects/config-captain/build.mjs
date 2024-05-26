@@ -4,14 +4,7 @@ import fs from "fs";
 const fileContent = fs.readFileSync("./package.json", "utf-8");
 const packageJson = JSON.parse(fileContent);
 const dependencies = packageJson.dependencies ?? {};
-const dependencyMap = new Map(Object.entries(dependencies));
-
-let external = [];
-dependencyMap.forEach((dependency, key) => {
-  if (!dependency.includes("workspace")) {
-    external.push(key);
-  }
-});
+const external = Object.keys(dependencies);
 
 await esbuild.build({
   entryPoints: ["./src/index.ts"],
