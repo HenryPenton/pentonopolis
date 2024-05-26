@@ -124,6 +124,9 @@ importers:
       '@types/uuid':
         specifier: 9.x
         version: 9.0.8
+      esbuild:
+        specifier: 0.21.4
+        version: 0.21.4
       jest:
         specifier: 29.x
         version: 29.7.0(@types/node@20.12.12)
