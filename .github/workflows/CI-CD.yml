@@ -98,7 +98,7 @@ jobs:
         with:
           max_attempts: 3
           retry_on: error
-          timeout_seconds: 15
+          timeout_minutes: 2
           command: |
             git pull
             affected_base=$(git describe --tags --abbrev=0)
@@ -110,7 +110,7 @@ jobs:
               git commit -m"CI bump affected versions"
             fi
 
-            pnpx nx affected -t tag:current --base=$(git describe --tags --abbrev=0) --head=HEAD --parallel=false
+            pnpx nx affected -t tag:current --base=$affected_base --head=HEAD --parallel=false
 
             git push && git push --tags
 
@@ -120,7 +120,7 @@ jobs:
         with:
           max_attempts: 3
           retry_on: error
-          timeout_seconds: 15
+          timeout_minutes: 2
           command: |
 
             git pull
