@@ -37,6 +37,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.CONTINUOUS_DEPLOYMENT }}
 
+      - run: |
+          git fetch
+          git config --global user.email ${{ secrets.GIT_EMAIL }}
+          git config --global user.name "ci"
+
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
@@ -92,6 +97,15 @@ jobs:
           affected_base=$(git describe --tags --abbrev=0)
           pnpx nx affected -t release-patch --base=$affected_base --head=HEAD --parallel=false
           pnpx nx affected -t tarball --base=$affected_base --head=HEAD --parallel=false
+
+          git add -A
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m"CI bump affected versions"
+          fi
+
+          pnpx nx affected -t tag:current --base=$(git describe --tags --abbrev=0) --head=HEAD --parallel=false
+
+          git push && git push --tags
         name: Continuous build
         if: ${{ github.event_name == 'push' }}
 
@@ -161,7 +175,6 @@ jobs:
 
       - run: |
           git fetch
-          git describe --tags --abbrev=0
           git config --global user.email ${{ secrets.GIT_EMAIL }}
           git config --global user.name "ci"
 
@@ -209,20 +222,6 @@ jobs:
           path: |
             **/node_modules
           key: ${{ env.npm_dependencies_cache_key }}
-
-      - name: Continuous version bump
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          git pull
-          pnpx nx affected -t release-patch --base=$(git describe --tags --abbrev=0) --head=HEAD --parallel=false
-          git add -A
-          if ! git diff-index --quiet HEAD --; then
-            git commit -m"CI bump affected versions"
-          fi
-
-          pnpx nx affected -t tag:current --base=$(git describe --tags --abbrev=0) --head=HEAD --parallel=false
-
-          git push && git push --tags
 
       - name: Requested version bump
         if: ${{ github.event_name == 'workflow_dispatch' }}
