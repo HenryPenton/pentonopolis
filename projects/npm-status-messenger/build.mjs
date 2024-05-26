@@ -2,8 +2,8 @@ import * as esbuild from "esbuild";
 import fs from "fs";
 
 const fileContent = fs.readFileSync("./package.json", "utf-8");
-const { dependencies } = JSON.parse(fileContent);
-
+const packageJson = JSON.parse(fileContent);
+const dependencies = packageJson.dependencies ?? {};
 const dependencyMap = new Map(Object.entries(dependencies));
 
 let external = [];
