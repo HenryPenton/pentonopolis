@@ -50,7 +50,7 @@ jobs:
         id: cache_keys
         run: |
           npm_dependencies_cache_key=CI-test-and-build-npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
-          nx_cache_key=${{ runner.os }}-CI-test-and-build-nx-${{ hashFiles('nx.json') }}
+          nx_cache_key=test-and-build-nx-${{ hashFiles('nx.json') }}
 
           echo "npm_dependencies_cache_key=$npm_dependencies_cache_key" >> "$GITHUB_ENV"
           echo "nx_cache_key=$nx_cache_key" >> "$GITHUB_ENV"
