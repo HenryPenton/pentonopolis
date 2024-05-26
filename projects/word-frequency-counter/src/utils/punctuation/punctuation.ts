@@ -1,6 +1,6 @@
-import { generateNewId } from "ids";
 import { Config } from "../../config";
 import { Protection } from "../../protection/protection";
+import { generateNewId } from "../generateUUID/uuid";
 
 const removePunctuation = (text: string): string =>
   text

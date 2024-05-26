@@ -72,10 +72,11 @@
     "@swc/core": "1.x",
     "@swc/jest": "0.2.x",
     "esbuild": "^0.21.4",
+    "@types/uuid": "9.x",
     "jest": "29.x",
     "typescript": "5.x"
   },
   "dependencies": {
-    "ids": "workspace:*"
+    "uuid": "9.0.1"
   }
 }

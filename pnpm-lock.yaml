@@ -136,9 +136,9 @@ importers:
 
   projects/who-owes-who:
     dependencies:
-      ids:
-        specifier: workspace:*
-        version: link:../../shared/ids
+      uuid:
+        specifier: 9.0.1
+        version: 9.0.1
     devDependencies:
       '@stryker-mutator/core':
         specifier: 8.x
@@ -170,37 +170,6 @@ importers:
 
   projects/word-frequency-counter:
     dependencies:
-      ids:
-        specifier: workspace:*
-        version: link:../../shared/ids
-    devDependencies:
-      '@stryker-mutator/core':
-        specifier: 8.x
-        version: 8.2.6
-      '@stryker-mutator/jest-runner':
-        specifier: 8.x
-        version: 8.2.6(@stryker-mutator/core@8.2.6)
-      '@stryker-mutator/typescript-checker':
-        specifier: 8.x
-        version: 8.2.6(@stryker-mutator/core@8.2.6)(typescript@5.4.5)
-      '@swc/core':
-        specifier: 1.x
-        version: 1.5.7
-      '@swc/jest':
-        specifier: 0.2.x
-        version: 0.2.36(@swc/core@1.5.7)
-      esbuild:
-        specifier: ^0.21.4
-        version: 0.21.4
-      jest:
-        specifier: 29.x
-        version: 29.7.0(@types/node@20.12.12)
-      typescript:
-        specifier: 5.x
-        version: 5.4.5
-
-  shared/ids:
-    dependencies:
       uuid:
         specifier: 9.0.1
         version: 9.0.1
@@ -209,7 +178,7 @@ importers:
         specifier: 8.x
         version: 8.2.6
       '@stryker-mutator/jest-runner':
-        specifier: ^8.x
+        specifier: 8.x
         version: 8.2.6(@stryker-mutator/core@8.2.6)
       '@stryker-mutator/typescript-checker':
         specifier: 8.x
@@ -220,14 +189,11 @@ importers:
       '@swc/jest':
         specifier: 0.2.x
         version: 0.2.36(@swc/core@1.5.7)
-      '@types/node':
-        specifier: 20.x
-        version: 20.12.12
       '@types/uuid':
         specifier: 9.x
         version: 9.0.8
       esbuild:
-        specifier: 0.21.4
+        specifier: ^0.21.4
         version: 0.21.4
       jest:
         specifier: 29.x

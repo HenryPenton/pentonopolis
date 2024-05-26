@@ -1,4 +1,4 @@
-import { generateNewId } from "ids";
+import { generateNewId } from "../generateUUID/uuid";
 import { SuggestedPayment } from "../interfaces/payment";
 import { PersonMap } from "../interfaces/person";
 import { Person } from "../person/Person";
