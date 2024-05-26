@@ -87,6 +87,10 @@ jobs:
           pnpm test:coverage
           pnpm prettier:check
           pnpm lint:check
+
+      - run: |
+          du -a -h --max-depth=1 | sort -hr
+
       - run: |
           affected_base=$(git describe --tags --abbrev=0)
           pnpx nx affected -t release-patch --base=$affected_base --head=HEAD --parallel=false
@@ -142,7 +146,8 @@ jobs:
         if: steps.cache_nx.outputs.cache-hit == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - run: |
+          du -a -h --max-depth=1 | sort -hr
       - name: Cache nx
         uses: actions/cache/save@v4
         with:
