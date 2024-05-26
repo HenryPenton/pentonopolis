@@ -1,7 +1,7 @@
 {
-  "name": "word-frequency-counter",
-  "version": "1.11.9",
-  "description": "A word frequency counter",
+  "name": "@henrypenton/uuid",
+  "version": "0.0.2",
+  "description": "Shared UUID utilities for pentonopolis",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -23,18 +23,6 @@
     "test": "jest",
     "tag:current": "git tag $npm_package_name@$npm_package_version"
   },
-  "files": [
-    "dist/**/*"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HenryPenton/pentonopolis.git"
-  },
-  "keywords": [
-    "word",
-    "frequency",
-    "counter"
-  ],
   "jest": {
     "transform": {
       "^.+\\.(t|j)sx?$": "@swc/jest"
@@ -42,9 +30,6 @@
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/mockingFunctions/mocks.ts",
       "<rootDir>/old"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/fetcher/fetcher.ts"
     ],
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec|steps))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
@@ -59,24 +44,36 @@
     "clearMocks": true,
     "resetMocks": true
   },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenryPenton/pentonopolis.git"
+  },
+  "keywords": [
+    "uuid",
+    "id",
+    "generator"
+  ],
   "author": "Henry Penton",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/HenryPenton/pentonopolis/issues"
   },
-  "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/word-frequency-counter#readme",
+  "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/uuid#readme",
   "devDependencies": {
     "@stryker-mutator/core": "8.x",
     "@stryker-mutator/jest-runner": "8.x",
     "@stryker-mutator/typescript-checker": "8.x",
     "@swc/core": "1.x",
-    "@swc/jest": "0.2.x",
-    "esbuild": "^0.21.4",
+    "@swc/jest": "0.x",
     "@types/uuid": "9.x",
     "jest": "29.x",
+    "esbuild": "0.21.4",
     "typescript": "5.x"
   },
   "dependencies": {
-    "@henrypenton/uuid": "workspace:*"
+    "uuid": "9.0.1"
   }
 }

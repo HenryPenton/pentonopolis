@@ -170,9 +170,9 @@ importers:
 
   projects/word-frequency-counter:
     dependencies:
-      uuid:
-        specifier: 9.0.1
-        version: 9.0.1
+      '@henrypenton/uuid':
+        specifier: workspace:*
+        version: link:../../shared/uuid
     devDependencies:
       '@stryker-mutator/core':
         specifier: 8.x
@@ -194,6 +194,40 @@ importers:
         version: 9.0.8
       esbuild:
         specifier: ^0.21.4
+        version: 0.21.4
+      jest:
+        specifier: 29.x
+        version: 29.7.0(@types/node@20.12.12)
+      typescript:
+        specifier: 5.x
+        version: 5.4.5
+
+  shared/uuid:
+    dependencies:
+      uuid:
+        specifier: 9.0.1
+        version: 9.0.1
+    devDependencies:
+      '@stryker-mutator/core':
+        specifier: 8.x
+        version: 8.2.6
+      '@stryker-mutator/jest-runner':
+        specifier: 8.x
+        version: 8.2.6(@stryker-mutator/core@8.2.6)
+      '@stryker-mutator/typescript-checker':
+        specifier: 8.x
+        version: 8.2.6(@stryker-mutator/core@8.2.6)(typescript@5.4.5)
+      '@swc/core':
+        specifier: 1.x
+        version: 1.5.7
+      '@swc/jest':
+        specifier: 0.x
+        version: 0.2.36(@swc/core@1.5.7)
+      '@types/uuid':
+        specifier: 9.x
+        version: 9.0.8
+      esbuild:
+        specifier: 0.21.4
         version: 0.21.4
       jest:
         specifier: 29.x

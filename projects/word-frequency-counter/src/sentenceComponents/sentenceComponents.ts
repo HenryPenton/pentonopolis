@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { Protection } from "../protection/protection";
-import { generateNewId } from "../utils/generateUUID/uuid";
+import { generateNewId } from "@henrypenton/uuid";
 import { punctuationRemover } from "../utils/punctuation/punctuation";
 
 export const getSentenceComponents = (
