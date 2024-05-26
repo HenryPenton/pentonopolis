@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "node build.mjs",
+    "postbuild": "tsc",
     "dependencies:check": "pnpm outdated --json > outdated.json || true",
     "deploy": "pnpm publish",
     "lint:check": "eslint --no-fix . --ext .ts",
@@ -66,6 +67,7 @@
     "@stryker-mutator/typescript-checker": "8.x",
     "jest": "29.x",
     "ts-jest": "29.x",
+    "esbuild": "0.21.4",
     "typescript": "5.x"
   },
   "dependencies": {
