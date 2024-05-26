@@ -1,7 +1,7 @@
-import { removeFromArray } from "array";
 import { PollOption } from "telegraf/typings/core/types/typegram";
 import { Movie } from "../fetcher/movie/movieFetcher";
 import { getMovieRatings } from "../utils/getMovieRatings";
+import { removeFromArray } from "../utils/removeFromArray";
 
 export type MoviePollId = string;
 

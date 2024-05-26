@@ -65,9 +65,6 @@ importers:
 
   projects/moviebot-telegram:
     dependencies:
-      array:
-        specifier: workspace:*
-        version: link:../../shared/array
       axios:
         specifier: 1.7.2
         version: 1.7.2
@@ -197,33 +194,6 @@ importers:
         version: 0.21.4
       jest:
         specifier: 29.x
-        version: 29.7.0(@types/node@20.12.12)
-      typescript:
-        specifier: 5.x
-        version: 5.4.5
-
-  shared/array:
-    devDependencies:
-      '@stryker-mutator/core':
-        specifier: 8.x
-        version: 8.2.6
-      '@stryker-mutator/jest-runner':
-        specifier: ^8.x
-        version: 8.2.6(@stryker-mutator/core@8.2.6)
-      '@stryker-mutator/typescript-checker':
-        specifier: 8.x
-        version: 8.2.6(@stryker-mutator/core@8.2.6)(typescript@5.4.5)
-      '@swc/core':
-        specifier: 1.x
-        version: 1.5.7
-      '@swc/jest':
-        specifier: 0.2.x
-        version: 0.2.36(@swc/core@1.5.7)
-      esbuild:
-        specifier: 0.21.4
-        version: 0.21.4
-      jest:
-        specifier: 29.7.0
         version: 29.7.0(@types/node@20.12.12)
       typescript:
         specifier: 5.x
