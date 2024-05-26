@@ -3,7 +3,6 @@ name: Check Specific Workflow Approval
 on:
   schedule:
     - cron: "*/5 * * * *" # Runs every 5 minutes
-  workflow_dispatch:
 
 jobs:
   check-approvals:
@@ -11,57 +10,42 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.x
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+      - name: Install jq
+        run: sudo apt-get install -y jq
 
       - name: Check for pending approvals
         env:
           GITHUB_TOKEN: ${{ secrets.TRIGGER }}
         run: |
-          python -c "
-          import os
-          import requests
-          from datetime import datetime
+          REPO="henrypenton/pentonopolis"  # replace with your repository
+          WORKFLOW_ID="test-deploy.yml"  # replace with your workflow file name
+          HEADERS="Authorization: token $GITHUB_TOKEN"
 
-          GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-          REPO = 'HenryPenton/pentonopolis'
-          WORKFLOW_ID = 'test-deploy.yml'
-          HEADERS = {
-              'Authorization': f'token {GITHUB_TOKEN}',
-              'Accept': 'application/vnd.github.v3+json'
-          }
+          # Get workflow runs
+          response=$(curl -s -H "$HEADERS" "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_ID/runs")
 
-          def get_pending_approvals():
-              url = f'https://api.github.com/repos/{REPO}/actions/workflows/{WORKFLOW_ID}/runs'
-              response = requests.get(url, headers=HEADERS)
-              response.raise_for_status()
-              runs = response.json()['workflow_runs']
-              pending_runs = [run for run in runs if run['status'] == 'waiting' and run['conclusion'] is None]
-              running_runs = [run for run in runs if run['status'] == 'in_progress']
-              return pending_runs, running_runs
+          # Parse the workflow runs
+          pending_runs=$(echo $response | jq '[.workflow_runs[] | select(.status == "waiting" and .conclusion == null)]')
+          running_runs=$(echo $response | jq '[.workflow_runs[] | select(.status == "in_progress")]')
 
-          def approve_run(run_id):
-              url = f'https://api.github.com/repos/{REPO}/actions/runs/{run_id}/approve'
-              response = requests.post(url, headers=HEADERS)
-              response.raise_for_status()
-              print(f'Approved run: {run_id}')
-
-          pending_runs, running_runs = get_pending_approvals()
-          if running_runs:
-              print('There are currently running runs, approval will not be triggered.')
-          elif pending_runs:
-              pending_runs.sort(key=lambda run: datetime.strptime(run['created_at'], '%Y-%m-%dT%H:%M:%SZ'))
-              longest_waiting_run = pending_runs[0]
-              approve_run(longest_waiting_run['id'])
-          else:
-              print('No pending approvals found')
-          "
+          if [ $(echo $running_runs | jq 'length') -gt 0 ]; then
+            echo "There are currently running runs, approval will not be triggered."
+          elif [ $(echo $pending_runs | jq 'length') -gt 0 ]; then
+            # Sort pending runs by creation date and get the oldest one
+            longest_waiting_run=$(echo $pending_runs | jq -r 'sort_by(.created_at) | .[0]')
+            run_id=$(echo $longest_waiting_run | jq -r '.id')
+            
+            # Approve the longest waiting run
+            approve_response=$(curl -s -X POST -H "$HEADERS" "https://api.github.com/repos/$REPO/actions/runs/$run_id/approve")
+            
+            if [ $? -eq 0 ]; then
+              echo "Approved run: $run_id"
+            else
+              echo "Failed to approve run: $run_id"
+              echo "Response: $approve_response"
+            fi
+          else
+            echo "No pending approvals found."
+          fi
