@@ -12,8 +12,9 @@ permissions:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
+    environment: NPM
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - run: echo "in here"
