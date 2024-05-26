@@ -1,6 +1,6 @@
 # README
 
-![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/build-the-monorepo.yml/badge.svg)
+![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI-CD.yml/badge.svg)
 
 Config Captain is designed to be a dependency injectable environment configuration object that can make helpful suggestions as to what configuration you have loaded.
 

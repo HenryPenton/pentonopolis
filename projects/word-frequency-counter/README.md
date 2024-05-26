@@ -1,6 +1,6 @@
 # README
 
-![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/build-the-monorepo.yml/badge.svg)
+![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI-CD.yml/badge.svg)
 
 A typescript word frequency counter, built with test driven development.
 
