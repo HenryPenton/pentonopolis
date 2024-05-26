@@ -33,7 +33,7 @@ jobs:
           from datetime import datetime
 
           GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-          REPO = 'henrypenton/pentonopolis'
+          REPO = 'HenryPenton/pentonopolis'
           WORKFLOW_ID = 'test-deploy.yml'
           HEADERS = {
               'Authorization': f'token {GITHUB_TOKEN}',
