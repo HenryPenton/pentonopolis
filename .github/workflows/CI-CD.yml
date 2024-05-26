@@ -111,7 +111,16 @@ jobs:
             else
                 echo "No files matching pattern '$PATTERN' found in '$SOURCE_DIR'."
                 touch $DEST_DIR/placeholder 
-            fi
+          fi
+
+          SHARED_SOURCE_DIR="./shared"
+          if compgen -G "$SHARED_SOURCE_DIR/$PATTERN" > /dev/null; then
+            cp "$SHARED_SOURCE_DIR"/$PATTERN "$DEST_DIR"
+            echo "Files matching pattern '$PATTERN' have been copied to '$DEST_DIR'."
+            else
+                echo "No files matching pattern '$PATTERN' found in '$SHARED_SOURCE_DIR'."
+                touch $DEST_DIR/placeholder 
+          fi
         name: Copy tarballs to build folder
 
       - uses: actions/upload-artifact@v4
