@@ -110,6 +110,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
 
       - run: |
+          git pull
           pnpx nx release-${{ inputs.deployment-type }} ${{ inputs.package-name }}
           pnpx nx tarball ${{ inputs.package-name }}
           git add -A
