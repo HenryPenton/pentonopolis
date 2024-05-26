@@ -30,13 +30,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          python -c "
           import os
           import requests
           from datetime import datetime
 
           GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-          REPO = 'henrypenton/pentonopolis'  # replace with your repository
-          WORKFLOW_ID = 'test-deploy.yml'  # replace with your workflow file name
+          REPO = 'henrypenton/pentonopolis'
+          WORKFLOW_ID = 'test-deploy.yml'
           HEADERS = {
               'Authorization': f'token {GITHUB_TOKEN}',
               'Accept': 'application/vnd.github.v3+json'
@@ -66,3 +67,4 @@ jobs:
               approve_run(longest_waiting_run['id'])
           else:
               print('No pending approvals found')
+          "
