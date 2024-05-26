@@ -72,6 +72,6 @@
     "typescript": "5.x"
   },
   "dependencies": {
-    "uuid": "workspace:*"
+    "ids": "workspace:*"
   }
 }

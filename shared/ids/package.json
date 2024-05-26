@@ -1,5 +1,5 @@
 {
-  "name": "uuid",
+  "name": "ids",
   "version": "1.0.0",
   "description": "UUID utilities",
   "main": "dist/index.js",

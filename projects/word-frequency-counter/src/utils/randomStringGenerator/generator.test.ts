@@ -1,4 +1,4 @@
-import { generateNewId } from "uuid";
+import { generateNewId } from "ids";
 import { generateRandomStrings } from "./generator";
 
 describe("random strings", () => {

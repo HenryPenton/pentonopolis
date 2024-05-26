@@ -1,4 +1,4 @@
-import { generateNewId } from "uuid";
+import { generateNewId } from "ids";
 import { PaymentSetDoesNotExistError } from "../exceptions/Payment";
 import { DebtMap } from "../interfaces/debt";
 import {

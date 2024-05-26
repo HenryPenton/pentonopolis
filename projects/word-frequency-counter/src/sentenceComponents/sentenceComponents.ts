@@ -1,4 +1,4 @@
-import { generateNewId } from "uuid";
+import { generateNewId } from "ids";
 import { Config } from "../config";
 import { Protection } from "../protection/protection";
 import { punctuationRemover } from "../utils/punctuation/punctuation";

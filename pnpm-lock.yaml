@@ -133,9 +133,9 @@ importers:
 
   projects/who-owes-who:
     dependencies:
-      uuid:
+      ids:
         specifier: workspace:*
-        version: link:../../shared/uuid
+        version: link:../../shared/ids
     devDependencies:
       '@stryker-mutator/core':
         specifier: 8.x
@@ -164,9 +164,9 @@ importers:
 
   projects/word-frequency-counter:
     dependencies:
-      uuid:
+      ids:
         specifier: workspace:*
-        version: link:../../shared/uuid
+        version: link:../../shared/ids
     devDependencies:
       '@stryker-mutator/core':
         specifier: 8.x
@@ -214,7 +214,7 @@ importers:
         specifier: 5.x
         version: 5.4.5
 
-  shared/uuid:
+  shared/ids:
     dependencies:
       uuid:
         specifier: 9.0.1
