@@ -23,7 +23,7 @@ jobs:
           REPO="henrypenton/pentonopolis"
           WORKFLOW_ID="test-deploy.yml"
           HEADERS="Authorization: token $GITHUB_TOKEN"
-          DATA=`{"environment_ids":[${{ secrets.ENVIRONMENT_ID }}],"state":"approved","comment":"Ship it!"}`
+          DATA="{'environment_ids':[${{ secrets.ENVIRONMENT_ID }}],'state':'approved','comment':'Ship it!'}"
 
           # Get workflow runs
           response=$(curl -s -H "$HEADERS" "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_ID/runs")
