@@ -8,8 +8,8 @@ describe("Telegram Client", () => {
       TELEGRAM_CHAT_ID: "telegram-chat-id",
       TELEGRAM_BOT_TOKEN: "telegram-bot-token"
     });
-
     const telegramClient = new TelegramClient(stubFetch, dummyConfig);
+
     telegramClient.sendMessage("some message");
 
     expect(stubFetch).toHaveBeenCalledWith(
