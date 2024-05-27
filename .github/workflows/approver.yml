@@ -40,8 +40,9 @@ jobs:
               sleep 60
             elif [ $(echo $pending_runs | jq 'length') -gt 0 ]; then
               # Sort pending runs by creation date and get the oldest one
-              longest_waiting_run=$(echo $pending_runs | jq -r 'sort_by(.created_at) | .[0]')
-              run_id=$(echo $longest_waiting_run | jq -r '.id')
+              oldest_commit_run=$(echo $pending_runs | jq -r 'sort_by(.head_commit.timestamp) | .[0]')
+              run_id=$(echo $oldest_commit_run | jq -r '.id')
+
 
               # Get pending deployments for the run
               pending_deployments=$(curl -s -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
