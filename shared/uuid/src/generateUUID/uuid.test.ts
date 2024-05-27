@@ -12,6 +12,7 @@ describe("uuid", () => {
 
     test("the uuids are the right length", () => {
       expect(generateNewId()).toHaveLength(36);
+      expect(generateNewId(true)).toHaveLength(36);
     });
   });
 
