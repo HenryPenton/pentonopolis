@@ -180,29 +180,3 @@ jobs:
           path: |
             .nx
           key: ${{ env.nx_cache_key }}
-
-  publish:
-    needs: [test-and-build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org/
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: ./build
-          github-token: ${{ github.token }}
-
-      - run: |
-          for FILE in ./build/*.tgz; do
-            if [ -e "$FILE" ]; then
-                npm publish $FILE
-            fi
-          done
-        name: Publish NPM modules
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

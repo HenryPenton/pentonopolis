@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TRIGGER }}
         run: |
           REPO="henrypenton/pentonopolis"  # replace with your repository
-          WORKFLOW_ID="test-deploy.yml"  # replace with your workflow file name
+          WORKFLOW_ID="CD.yml"  # replace with your workflow file name
           HEADERS="Authorization: token $GITHUB_TOKEN"
           API_VERSION_HEADER="X-GitHub-Api-Version: 2022-11-28"
           ACCEPT_HEADER="Accept: application/vnd.github+json"
