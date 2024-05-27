@@ -24,7 +24,7 @@ jobs:
           name: build-artifacts
           path: ./build
           github-token: ${{ github.token }}
-          run-id: ${{ github.event.workflow.id }}
+          run-id: ${{ github.event.workflow_run.id }}
 
       - run: |
           for FILE in ./build/*.tgz; do
