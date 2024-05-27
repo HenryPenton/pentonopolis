@@ -40,7 +40,7 @@ jobs:
               sleep 60
             elif [ $(echo $pending_runs | jq 'length') -gt 0 ]; then
               # Sort pending runs by creation date and get the oldest one
-              oldest_triggering_workflow_run=$(echo $pending_runs | jq -r 'sort_by(.triggering_workflow_run.started_at) | .[0]')
+              oldest_triggering_workflow_run=$(echo $pending_runs | jq -r 'sort_by(.triggering_workflow_run.started_at) | reverse | .[0]')
               run_id=$(echo $oldest_triggering_workflow_run | jq -r '.id')
 
               # Get pending deployments for the run
