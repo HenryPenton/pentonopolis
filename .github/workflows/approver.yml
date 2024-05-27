@@ -1,9 +1,9 @@
-name: Check Specific Workflow Approval
+name: Check Specific Environment Approval
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
-  workflow_dispatch:
+    - cron: "*/5 * * * *" # Runs every 5 minutes
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   check-approvals:
@@ -11,24 +11,23 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      - name: Check for pending approvals
+      - name: Check for pending environment approvals
         env:
           GITHUB_TOKEN: ${{ secrets.TRIGGER }}
         run: |
-          REPO="henrypenton/pentonopolis"
-          WORKFLOW_ID="test-deploy.yml"
-          AUTH_HEADER="Authorization: token $GITHUB_TOKEN"
+          REPO="henrypenton/pentonopolis"  # replace with your repository
+          WORKFLOW_ID="test-deploy.yml"  # replace with your workflow file name
+          HEADERS="Authorization: token $GITHUB_TOKEN"
           API_VERSION_HEADER="X-GitHub-Api-Version: 2022-11-28"
           ACCEPT_HEADER="Accept: application/vnd.github+json"
-          DATA="{'environment_ids':[${{ secrets.ENVIRONMENT_ID }}],'state':'approved','comment':'Ship it!'}"
 
           # Get workflow runs
-          response=$(curl -s -H "$AUTH_HEADER" "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_ID/runs")
+          response=$(curl -s -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" "https://api.github.com/repos/$REPO/actions/workflows/$WORKFLOW_ID/runs")
 
           # Parse the workflow runs
           pending_runs=$(echo $response | jq '[.workflow_runs[] | select(.status == "waiting" and .conclusion == null)]')
@@ -40,15 +39,25 @@ jobs:
             # Sort pending runs by creation date and get the oldest one
             longest_waiting_run=$(echo $pending_runs | jq -r 'sort_by(.created_at) | .[0]')
             run_id=$(echo $longest_waiting_run | jq -r '.id')
+
+            # Get pending deployments for the environment
+            pending_deployments=$(curl -s -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
             
-            # Approve the longest waiting run
-            approve_response=$(curl -s -X POST -H "$AUTH_HEADER" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" -d "$DATA" "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
-            
-            if [ $? -eq 0 ]; then
-              echo "Approved run: $run_id"
+            if [ $(echo $pending_deployments | jq 'length') -gt 0 ]; then
+              # Approve the pending deployment
+              environment_id=$(echo $pending_deployments | jq -r '.[0].environment.id')
+              deployment_id=$(echo $pending_deployments | jq -r '.[0].id')
+
+              approval_response=$(curl -s -X POST -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" -d '{"environment_ids":['"$environment_id"']}' "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
+
+              if [ $? -eq 0 ]; then
+                echo "Approved deployment: $deployment_id"
+              else
+                echo "Failed to approve deployment: $deployment_id"
+                echo "Response: $approval_response"
+              fi
             else
-              echo "Failed to approve run: $run_id"
-              echo "Response: $approve_response"
+              echo "No pending deployments for the specified environment."
             fi
           else
             echo "No pending approvals found."
