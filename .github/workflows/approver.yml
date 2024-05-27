@@ -43,8 +43,6 @@ jobs:
               oldest_triggering_workflow_run=$(echo $pending_runs | jq -r 'sort_by(.triggering_workflow_run.started_at) | .[0]')
               run_id=$(echo $oldest_triggering_workflow_run | jq -r '.id')
 
-
-
               # Get pending deployments for the run
               pending_deployments=$(curl -s -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
 
