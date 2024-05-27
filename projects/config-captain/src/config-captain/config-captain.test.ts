@@ -273,7 +273,7 @@ describe("config captain", () => {
   describe("prioritisation", () => {
     test("prioritises the first data source", () => {
       const dataSourceOne = {
-        "some-variable-name": "the-value-i-want-to-have-priority"
+        "some-variable-name": "the-value-I-want-to-have-priority"
       };
 
       const dataSourceTwo = {
@@ -289,7 +289,7 @@ describe("config captain", () => {
       );
 
       const expectedEnvironmentVariables = {
-        variableName: "the-value-i-want-to-have-priority"
+        variableName: "the-value-I-want-to-have-priority"
       };
 
       expect(config.getConfigurationVariables()).toEqual(
