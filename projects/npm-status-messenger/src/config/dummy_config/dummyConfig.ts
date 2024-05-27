@@ -13,8 +13,8 @@ export const getDummyConfig = (overrides: Overrides = {}): IConfig => {
     [
       {
         TELEGRAM_API_URL: "dummy-url",
-        TELEGRAM_CHAT_ID: "dummy-chat-id",
         TELEGRAM_BOT_TOKEN: "dummy-bot-token",
+        TELEGRAM_CHAT_ID: "dummy-chat-id",
         ...overrides
       }
     ]
