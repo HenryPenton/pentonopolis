@@ -48,7 +48,7 @@ jobs:
               deployment_id=$(echo $pending_deployments | jq -r '.[0].id')
 
               # Approve the pending deployment
-              approve_response=$(curl -s -X POST -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" -d '{"environment_ids":['"$environment_id"']}' "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
+              approve_response=$(curl -s -X POST -H "$HEADERS" -H "$API_VERSION_HEADER" -H "$ACCEPT_HEADER" -d '{"state":"approved","comment":"Ship it!","environment_ids":['"${{secrets.ENVIRONMENT_ID}}"']}' "https://api.github.com/repos/$REPO/actions/runs/$run_id/pending_deployments")
 
               if [ $? -eq 0 ]; then
                 echo "Approved deployment for run: $run_id"
