@@ -1,4 +1,4 @@
-name: Check Specific Environment Approval
+name: Check Specific Workflow Approval
 
 on:
   schedule:
@@ -16,13 +16,12 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      - name: Check for pending environment approvals
+      - name: Check for pending approvals
         env:
           GITHUB_TOKEN: ${{ secrets.TRIGGER }}
         run: |
           REPO="henrypenton/pentonopolis"  # replace with your repository
           WORKFLOW_ID="test-deploy.yml"  # replace with your workflow file name
-          ENVIRONMENT="NPM"  # replace with your environment name
           HEADERS="Authorization: token $GITHUB_TOKEN"
 
           # Get workflow runs
@@ -38,25 +37,15 @@ jobs:
             # Sort pending runs by creation date and get the oldest one
             longest_waiting_run=$(echo $pending_runs | jq -r 'sort_by(.created_at) | .[0]')
             run_id=$(echo $longest_waiting_run | jq -r '.id')
-
-            # Get pending deployments for the environment
-            pending_deployments=$(curl -s -H "$HEADERS" "https://api.github.com/repos/$REPO/actions/runs/$run_id/deployment_protection_rule_statuses" | jq '[.[] | select(.environment == "'$ENVIRONMENT'" and .state == "pending")]')
             
-            if [ $(echo $pending_deployments | jq 'length') -gt 0 ]; then
-              # Approve the pending deployment
-              deployment_id=$(echo $pending_deployments | jq -r '.[0].id')
-              approval_url=$(echo $pending_deployments | jq -r '.[0]._links.approve.href')
-
-              approve_response=$(curl -s -X POST -H "$HEADERS" "$approval_url")
+            # Approve the longest waiting run
+            approve_response=$(curl -s -X POST -H "$HEADERS" "https://api.github.com/repos/$REPO/actions/runs/$run_id/approve")
             
-              if [ $? -eq 0 ]; then
-                echo "Approved deployment: $deployment_id"
-              else
-                echo "Failed to approve deployment: $deployment_id"
-                echo "Response: $approve_response"
-              fi
+            if [ $? -eq 0 ]; then
+              echo "Approved run: $run_id"
             else
-              echo "No pending deployments for environment: $ENVIRONMENT"
+              echo "Failed to approve run: $run_id"
+              echo "Response: $approve_response"
             fi
           else
             echo "No pending approvals found."
