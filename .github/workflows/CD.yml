@@ -1,5 +1,5 @@
 name: CD
-run-name: ${{ github.ref_name }}
+
 on:
   workflow_run:
     workflows: [CI-CD]
