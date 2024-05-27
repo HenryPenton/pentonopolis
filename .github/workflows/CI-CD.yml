@@ -3,6 +3,8 @@ name: CI-CD
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - ".github"
   workflow_dispatch:
     inputs:
       package-name:
