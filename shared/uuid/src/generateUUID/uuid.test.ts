@@ -6,13 +6,13 @@ describe("uuid", () => {
       expect(generateNewId()).not.toEqual(generateNewId());
     });
 
-    test("the ids are strings", () => {
-      expect(generateNewId()).toEqual(expect.any(String));
-    });
-
     test("the uuids are the right length", () => {
       expect(generateNewId()).toHaveLength(36);
       expect(generateNewId(true)).toHaveLength(36);
+    });
+
+    test("the ids are strings", () => {
+      expect(generateNewId()).toEqual(expect.any(String));
     });
   });
 
