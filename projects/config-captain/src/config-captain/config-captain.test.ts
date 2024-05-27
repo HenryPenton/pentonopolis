@@ -272,12 +272,11 @@ describe("config captain", () => {
 
   describe("prioritisation", () => {
     test("prioritises the first data source", () => {
-      const dataSourceOne = {
-        "some-variable-name": "the-value-I-want-to-have-priority"
-      };
-
       const dataSourceTwo = {
         "some-variable-name": "some-other-value"
+      };
+      const dataSourceOne = {
+        "some-variable-name": "the-value-I-want-to-have-priority"
       };
 
       const config = new Configuration(
