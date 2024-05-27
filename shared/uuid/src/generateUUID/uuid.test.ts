@@ -20,9 +20,11 @@ describe("uuid", () => {
     test("the uuids are unique", () => {
       expect(generateNewId(false)).not.toEqual(generateNewId(false));
     });
+
     test("the uuids are strings", () => {
       expect(generateNewId(false)).toEqual(expect.any(String));
     });
+
     test("the uuids are the right length", () => {
       expect(generateNewId(false)).toHaveLength(32);
     });
