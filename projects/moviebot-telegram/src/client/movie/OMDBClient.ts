@@ -1,4 +1,5 @@
-import { MovieClient, Fetch, Movie } from "./movieClient";
+import { Fetch } from "../fetch";
+import { Movie, MovieClient } from "./movieClient";
 
 export class OMDBClient implements MovieClient {
   constructor(private readonly fetch: Fetch) {}

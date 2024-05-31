@@ -1,4 +1,5 @@
-import { Fetch, Movie } from "./movieClient";
+import { Fetch } from "../fetch";
+import { Movie } from "./movieClient";
 import { OMDBClient } from "./OMDBClient";
 describe("omdb client", () => {
   const responseBuilder = <T>(jsonOverride: T): Response => {

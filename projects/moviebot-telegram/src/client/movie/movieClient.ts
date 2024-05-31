@@ -25,5 +25,3 @@ export interface MovieClient {
   getMovieWithYear: (queryString: string, year: string) => Promise<Movie>;
   getMovieWithID: (id: string) => Promise<Movie>;
 }
-
-export type Fetch = typeof fetch;
