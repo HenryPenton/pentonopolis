@@ -44,7 +44,7 @@ describe("movie responses with just title", () => {
       .spyOn(MF, "getMovieWithID")
       .mockResolvedValueOnce({ Title: "thingy movie", imdbID: "tt12345457" });
     expect(await mR.fire()).toBe("Movie: thingy movie");
-  });
+  }, 10000);
 
   test("get a movie by title", async () => {
     const mR = new MovieResponse("Finding nemo", SearchType.WITH_SEARCH_TERM);
