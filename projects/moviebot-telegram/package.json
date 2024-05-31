@@ -71,7 +71,6 @@
     "typescript": "5.x"
   },
   "dependencies": {
-    "axios": "1.7.2",
     "telegraf": "4.16.3"
   }
 }

@@ -65,9 +65,6 @@ importers:
 
   projects/moviebot-telegram:
     dependencies:
-      axios:
-        specifier: 1.7.2
-        version: 1.7.2
       telegraf:
         specifier: 4.16.3
         version: 4.16.3
