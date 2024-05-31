@@ -4,6 +4,7 @@ import { OMDBClient } from "./client/movie/OMDBClient";
 import { YoutubeTrailerClient } from "./client/trailer/YoutubeTrailerClient";
 import { stripCommand } from "./commandParser/commandParser";
 import { Commands, SearchType } from "./commands";
+import { config } from "./config/config";
 import { CleanupResponse } from "./responseGenerator/responses/CleanupResponse/CleanupResponse";
 import {
   GetMoviePollResponse,
@@ -18,10 +19,10 @@ import { RemovieResponse } from "./responseGenerator/responses/RemovieResponse/R
 import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse/RemoviesResponse";
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
+const bot = new Telegraf(config.getConfigurationVariable("telegramBotToken"));
 const state = new State();
 const omdbClient = new OMDBClient(fetch);
-const trailerClient = new YoutubeTrailerClient(fetch);
+const trailerClient = new YoutubeTrailerClient(fetch, config);
 
 bot.command(Commands.movie, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);

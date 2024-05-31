@@ -1,3 +1,4 @@
+import { IConfig } from "../../config/config";
 import { Fetch } from "../fetch";
 import { TrailerClient } from "./trailerClient";
 
@@ -5,17 +6,22 @@ export type YoutubeResponse = {
   items: { id: { videoId: string } }[];
 };
 export class YoutubeTrailerClient implements TrailerClient {
-  constructor(private readonly fetch: Fetch) {}
+  constructor(
+    private readonly fetch: Fetch,
+    private readonly config: IConfig
+  ) {}
 
   private buildSearchURL = (movieName: string): string => {
+    const { youtubeApiKey } = this.config.getConfigurationVariables();
     const searchParams = new URLSearchParams();
-    searchParams.set("key", process.env.YOUTUBE_API_KEY || "");
+    searchParams.set("key", youtubeApiKey || "");
     searchParams.set("part", `snippet`);
     searchParams.set("q", `${movieName} movie trailer`);
     const searchURL = new URL(
       `?${searchParams.toString()}`,
       "https://www.googleapis.com/youtube/v3/search"
     );
+
     return searchURL.toString();
   };
 

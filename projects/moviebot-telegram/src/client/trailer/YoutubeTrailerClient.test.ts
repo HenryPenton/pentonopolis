@@ -1,3 +1,4 @@
+import { getDummyConfig } from "../../config/dummyConfig";
 import { Fetch } from "../fetch";
 import { YoutubeResponse, YoutubeTrailerClient } from "./YoutubeTrailerClient";
 
@@ -18,7 +19,8 @@ describe("youtube trailer client", () => {
         items: [{ id: { videoId: "1234" } }]
       });
     });
-    const youtubeClient = new YoutubeTrailerClient(fakeFetch);
+
+    const youtubeClient = new YoutubeTrailerClient(fakeFetch, getDummyConfig());
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
       `https://www.youtube.co.uk/watch?v=1234`
@@ -31,7 +33,7 @@ describe("youtube trailer client", () => {
         items: [{ id: { videoId: "9876" } }]
       });
     });
-    const youtubeClient = new YoutubeTrailerClient(fakeFetch);
+    const youtubeClient = new YoutubeTrailerClient(fakeFetch, getDummyConfig());
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
       `https://www.youtube.co.uk/watch?v=9876`
@@ -45,7 +47,9 @@ describe("youtube trailer client", () => {
       });
     });
 
-    await new YoutubeTrailerClient(fakeFetch).getTrailer("some movie");
+    await new YoutubeTrailerClient(fakeFetch, getDummyConfig()).getTrailer(
+      "some movie"
+    );
 
     expect(fakeFetch).toHaveBeenCalledWith(
       "https://www.googleapis.com/youtube/v3/search?key=&part=snippet&q=some+movie+movie+trailer"

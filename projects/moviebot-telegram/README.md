@@ -14,7 +14,7 @@ init();
 ```bash
 MOVIE_DATABASE_KEY=somekey
 TELEGRAM_BOT_TOKEN=sometoken
-YOUTUBE_API_KEY=somekey node index.js
+YOUTUBE_API_KEY=somekey
 ANONYMOUS_POLLS=<true||false>
 ```
 
