@@ -1,10 +1,14 @@
-import { Client, Rating } from "../../../client/client";
+import { MovieClient, Rating } from "../../../client/movie/movieClient";
 import { SearchType } from "../../../commands";
 import { getTrailer } from "../../../fetcher/trailer/trailerFetcher";
 import { AsyncMovieResponse } from "../AsyncMovieResponse";
 
 export class MovieResponse extends AsyncMovieResponse {
-  constructor(queryString: string, searchType: SearchType, client: Client) {
+  constructor(
+    queryString: string,
+    searchType: SearchType,
+    client: MovieClient
+  ) {
     super(queryString, searchType, client);
     this.queryString = queryString;
   }

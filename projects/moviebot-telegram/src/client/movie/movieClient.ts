@@ -20,7 +20,7 @@ export type Movie = {
   Ratings?: Rating[];
 };
 
-export interface Client {
+export interface MovieClient {
   getMovie: (queryString: string) => Promise<Movie>;
   getMovieWithYear: (queryString: string, year: string) => Promise<Movie>;
   getMovieWithID: (id: string) => Promise<Movie>;

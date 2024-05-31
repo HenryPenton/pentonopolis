@@ -1,6 +1,6 @@
-import { Client, Fetch, Movie } from "./client";
+import { MovieClient, Fetch, Movie } from "./movieClient";
 
-export class OMDBClient implements Client {
+export class OMDBClient implements MovieClient {
   constructor(private readonly fetch: Fetch) {}
 
   private buildURL = (params: { [key: string]: string }): string => {

@@ -1,4 +1,4 @@
-import { Movie } from "../client/client";
+import { Movie } from "../client/movie/movieClient";
 
 export const getMovieRatings = (movie: Movie): string | undefined => {
   let setMovieRating;

@@ -1,4 +1,4 @@
-import { Client, Movie } from "../../client/client";
+import { MovieClient, Movie } from "../../client/movie/movieClient";
 import { SearchType } from "../../commands";
 
 import { Response } from "./Response";
@@ -14,7 +14,7 @@ export abstract class AsyncMovieResponse extends Response {
   constructor(
     queryString: string,
     searchType: SearchType,
-    private readonly client: Client
+    private readonly client: MovieClient
   ) {
     super();
     this.movie = {};

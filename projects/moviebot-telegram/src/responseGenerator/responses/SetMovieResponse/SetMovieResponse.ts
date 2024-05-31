@@ -1,4 +1,4 @@
-import { Client } from "../../../client/client";
+import { MovieClient } from "../../../client/movie/movieClient";
 import { SearchType } from "../../../commands";
 import { State } from "../../../State/State";
 import { getMovieRatings } from "../../../utils/getMovieRatings";
@@ -16,7 +16,7 @@ export class SetMovieResponse extends AsyncMovieResponse {
     queryString: string,
     state: State,
     searchType: SearchType,
-    client: Client
+    client: MovieClient
   ) {
     super(queryString, searchType, client);
 

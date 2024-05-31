@@ -1,9 +1,9 @@
-import { Client, Movie } from "../../../client/client";
+import { Movie, MovieClient } from "../../../client/movie/movieClient";
 import { SearchType } from "../../../commands";
 import { State } from "../../../State/State";
 import { SetMovieResponse } from "./SetMovieResponse";
 
-const getDummyClient = (overrides?: Movie[]): Client => {
+const getDummyClient = (overrides?: Movie[]): MovieClient => {
   const clientFunc = jest.fn();
   if (overrides) {
     overrides?.forEach((override) => {
@@ -13,7 +13,7 @@ const getDummyClient = (overrides?: Movie[]): Client => {
     clientFunc.mockResolvedValueOnce({ Response: "False" });
   }
 
-  const client: Client = {
+  const client: MovieClient = {
     getMovie: clientFunc,
     getMovieWithYear: clientFunc,
     getMovieWithID: clientFunc

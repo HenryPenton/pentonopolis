@@ -1,14 +1,14 @@
-import { Client, Movie } from "../../../client/client";
+import { Movie, MovieClient } from "../../../client/movie/movieClient";
 import { SearchType } from "../../../commands";
 import { MovieResponse } from "./MovieResponse";
 
-const getDummyClient = (movieOverride?: Movie): Client => {
+const getDummyClient = (movieOverride?: Movie): MovieClient => {
   const response = async (): Promise<Movie> => {
     const movie: Movie = movieOverride ?? { Response: "False" };
     return movie;
   };
 
-  const client: Client = {
+  const client: MovieClient = {
     getMovie: response,
     getMovieWithYear: response,
     getMovieWithID: response

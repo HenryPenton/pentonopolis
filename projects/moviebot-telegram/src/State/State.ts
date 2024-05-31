@@ -1,5 +1,5 @@
 import { PollOption } from "telegraf/typings/core/types/typegram";
-import { Movie } from "../client/client";
+import { Movie } from "../client/movie/movieClient";
 import { getMovieRatings } from "../utils/getMovieRatings";
 import { removeFromArray } from "../utils/removeFromArray";
 

@@ -15,7 +15,7 @@ import { MovieResponse } from "./responseGenerator/responses/MovieResponse/Movie
 import { RemovieResponse } from "./responseGenerator/responses/RemovieResponse/RemovieResponse";
 import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse/RemoviesResponse";
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
-import { OMDBClient } from "./client/OMDBClient";
+import { OMDBClient } from "./client/movie/OMDBClient";
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
 const state = new State();
