@@ -1,6 +1,7 @@
 # Moviebot Telegram
 
-![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI-CD.yml/badge.svg)
+![Monorepo Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI.yml/badge.svg)
+![Continuous Deploy](https://github.com/HenryPenton/pentonopolis/actions/workflows/CD.yml/badge.svg)
 
 An open movie database bot written in typescript.
 

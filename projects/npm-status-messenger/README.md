@@ -1,6 +1,7 @@
 # NPM Status Messenger
 
-![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI-CD.yml/badge.svg)
+![Monorepo Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI.yml/badge.svg)
+![Continuous Deploy](https://github.com/HenryPenton/pentonopolis/actions/workflows/CD.yml/badge.svg)
 
 This package will allow you to send parsed data about the output of npm audit/outdated to a chat with a telegram bot.
 

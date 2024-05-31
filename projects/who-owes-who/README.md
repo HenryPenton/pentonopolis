@@ -1,6 +1,7 @@
 # README
 
-![Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI-CD.yml/badge.svg)
+![Monorepo Build](https://github.com/HenryPenton/pentonopolis/actions/workflows/CI.yml/badge.svg)
+![Continuous Deploy](https://github.com/HenryPenton/pentonopolis/actions/workflows/CD.yml/badge.svg)
 
 This is a package for tracking payments made by people within a group. After updating a the system with a payment, a list of suggested payments to balance the debts can be generated.
 
