@@ -60,11 +60,12 @@ describe("only command given", () => {
 
 describe("movie responses with just title", () => {
   test("get a movie by imdb id", async () => {
-    const client = getDummyClient();
+    const client = getDummyClient({
+      Title: "thingy movie",
+      imdbID: "tt12345457"
+    });
     const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
-    jest
-      .spyOn(MF, "getMovieWithID")
-      .mockResolvedValueOnce({ Title: "thingy movie", imdbID: "tt12345457" });
+
     expect(await mR.fire()).toBe("Movie: thingy movie");
   }, 10000);
 
@@ -80,15 +81,13 @@ describe("movie responses with just title", () => {
   });
 
   test("get a movie by with year", async () => {
-    const client = getDummyClient();
+    const client = getDummyClient({ Title: "thingy movie" });
     const mR = new MovieResponse(
       "thingy movie (1996)",
       SearchType.WITH_YEAR,
       client
     );
-    jest
-      .spyOn(MF, "getMovieWithYear")
-      .mockResolvedValueOnce({ Title: "thingy movie" });
+
     expect(await mR.fire()).toBe("Movie: thingy movie");
   });
 });
@@ -102,13 +101,13 @@ describe("movie responses with other information", () => {
     Year: "1995"
   };
   test("get a movie by imdb id", async () => {
-    const client = getDummyClient();
-    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
-    jest.spyOn(MF, "getMovieWithID").mockResolvedValueOnce({
+    const client = getDummyClient({
       Title: "thingy movie",
       imdbID: "tt12345457",
       ...genericMovieInfo
     });
+    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
+
     expect(await mR.fire()).toBe(
       `Movie: thingy movie (1995)\n\nRuntime: runtime\n\nsource: value\n\nDirector: director\n\nPlot: dude where is my automobile`
     );
@@ -131,15 +130,16 @@ describe("movie responses with other information", () => {
   });
 
   test("get a movie by with year", async () => {
-    const client = getDummyClient();
+    const client = getDummyClient({
+      Title: "thingy movie",
+      ...genericMovieInfo
+    });
     const mR = new MovieResponse(
       "thingy movie (1996)",
       SearchType.WITH_YEAR,
       client
     );
-    jest
-      .spyOn(MF, "getMovieWithYear")
-      .mockResolvedValueOnce({ Title: "thingy movie", ...genericMovieInfo });
+
     expect(await mR.fire()).toBe(
       `Movie: thingy movie (1995)\n\nRuntime: runtime\n\nsource: value\n\nDirector: director\n\nPlot: dude where is my automobile`
     );
@@ -158,13 +158,13 @@ describe("movie responses with other information", () => {
     Year: "1995"
   };
   test("movie with multiple ratings", async () => {
-    const client = getDummyClient();
-    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
-    jest.spyOn(MF, "getMovieWithID").mockResolvedValueOnce({
+    const client = getDummyClient({
       Title: "thingy movie",
       imdbID: "tt12345457",
       ...genericMovieInfo
     });
+    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
+
     expect(await mR.fire()).toBe(
       `Movie: thingy movie (1995)\n\nRuntime: runtime\n\nsource: value\nsriracha: tasty\n\nDirector: director\n\nPlot: dude where is my automobile`
     );
@@ -173,31 +173,23 @@ describe("movie responses with other information", () => {
 
 describe("unknown movie", () => {
   test("no response movie", async () => {
-    const client = getDummyClient();
+    const client = getDummyClient({ Response: "False" });
     const mR = new MovieResponse(
       "thingy movie (1996)",
       SearchType.WITH_YEAR,
       client
     );
-
-    jest
-      .spyOn(MF, "getMovieWithYear")
-      .mockResolvedValueOnce({ Response: "False" });
 
     expect(await mR.fire()).toBe(`Unknown movie`);
   });
 
   test("no title movie", async () => {
-    const client = getDummyClient();
+    const client = getDummyClient({ Title: undefined });
     const mR = new MovieResponse(
       "thingy movie (1996)",
       SearchType.WITH_YEAR,
       client
     );
-
-    jest
-      .spyOn(MF, "getMovieWithYear")
-      .mockResolvedValueOnce({ Title: undefined });
 
     expect(await mR.fire()).toBe(`Unknown movie`);
   });

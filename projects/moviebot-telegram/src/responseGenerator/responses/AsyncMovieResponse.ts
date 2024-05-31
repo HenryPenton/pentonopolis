@@ -1,10 +1,6 @@
 import { Client } from "../../client/client";
 import { SearchType } from "../../commands";
-import {
-  getMovieWithID,
-  getMovieWithYear,
-  Movie
-} from "../../fetcher/movie/movieFetcher";
+import { Movie } from "../../fetcher/movie/movieFetcher";
 import { Response } from "./Response";
 
 export class MovieNotProvidedError extends Error {}
@@ -37,11 +33,11 @@ export abstract class AsyncMovieResponse extends Response {
 
         querySplit.pop();
         const queryStringWithoutYear = querySplit.join(" ");
-        return getMovieWithYear(queryStringWithoutYear, movieYear);
+        return this.client.getMovieWithYear(queryStringWithoutYear, movieYear);
       }
       case SearchType.WITH_ID:
         if (noQueryString) throw new MovieIDNotProvided();
-        return getMovieWithID(this.queryString);
+        return this.client.getMovieWithID(this.queryString);
 
       case SearchType.WITH_SEARCH_TERM:
         if (noQueryString) throw new MovieNotProvidedError();
