@@ -8,6 +8,11 @@ const getDummyClient = (movieOverride?: MF.Movie): Client => {
     getMovie: async (): Promise<MF.Movie> => {
       const movie: MF.Movie = movieOverride ?? { Response: "False" };
       return movie;
+    },
+
+    getMovieWithYear: async (): Promise<MF.Movie> => {
+      const movie: MF.Movie = movieOverride ?? { Response: "False" };
+      return movie;
     }
   };
   return client;

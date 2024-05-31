@@ -14,7 +14,8 @@ const getDummyClient = (overrides?: MF.Movie[]): Client => {
     clientFunc.mockResolvedValueOnce({ Response: "False" });
   }
   const client: Client = {
-    getMovie: clientFunc
+    getMovie: clientFunc,
+    getMovieWithYear: clientFunc
   };
   return client;
 };
