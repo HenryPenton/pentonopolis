@@ -1,0 +1,77 @@
+{
+  "name": "moviebot-telegram-replacement",
+  "version": "0.0.0",
+  "description": "A moviebot for telegram",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "node build.mjs",
+    "postbuild": "tsc",
+    "dependencies:check": "pnpm outdated --json > outdated.json || true",
+    "deploy": "pnpm publish",
+    "lint:check": "eslint --no-fix . --ext .ts",
+    "lint": "eslint . --ext .ts",
+    "mutate": "stryker run -c stryker.config.json --concurrency 8",
+    "prettier:check": "prettier --check src/*",
+    "prettier": "prettier --write src/*",
+    "release-major": "pnpm version major",
+    "release-minor": "pnpm version minor",
+    "release-patch": "pnpm version patch",
+    "test:compile": "tsc --project tsconfig-test.json",
+    "test:coverage": "jest --coverage",
+    "test": "jest",
+    "tag:current": "git tag $npm_package_name@$npm_package_version"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenryPenton/pentonopolis.git"
+  },
+  "keywords": [
+    "telegram",
+    "moviebot"
+  ],
+  "author": "Henry Penton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HenryPenton/pentonopolis/issues"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/mockingFunctions/mocks.ts",
+      "<rootDir>/old"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/fetcher/fetcher.ts"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec|steps))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/telegraf-moviebot#readme",
+  "devDependencies": {
+    "@stryker-mutator/core": "8.x",
+    "@stryker-mutator/jest-runner": "8.x",
+    "@stryker-mutator/typescript-checker": "8.x",
+    "jest": "29.x",
+    "ts-jest": "29.x",
+    "esbuild": "0.21.4",
+    "typescript": "5.x"
+  },
+  "dependencies": {
+    "axios": "1.7.2",
+    "dotenv": "16.4.5",
+    "telegraf": "4.16.3"
+  }
+}
