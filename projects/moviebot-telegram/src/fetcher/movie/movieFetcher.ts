@@ -46,11 +46,11 @@ export const getMovieWithYear = async (
   ).catch(() => ({ Response: "False" }) as Movie);
 };
 
-export const getMovieWithID = async (queryString: string): Promise<Movie> => {
-  const splitQuery = splitter(queryString);
-  const urlQueryString = joiner(splitQuery);
+export const getMovieWithID = async (id: string): Promise<Movie> => {
+  const splitQuery = splitter(id);
+  const parsedId = joiner(splitQuery);
 
   return fetcher(
-    `http://www.omdbapi.com/?i=${urlQueryString}&apikey=${process.env.MOVIE_DATABASE_KEY}`
+    `http://www.omdbapi.com/?i=${parsedId}&apikey=${process.env.MOVIE_DATABASE_KEY}`
   ).catch(() => ({ Response: "False" }) as Movie);
 };

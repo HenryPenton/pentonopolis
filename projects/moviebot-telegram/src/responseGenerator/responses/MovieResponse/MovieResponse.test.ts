@@ -4,17 +4,17 @@ import * as MF from "../../../fetcher/movie/movieFetcher";
 import { MovieResponse } from "./MovieResponse";
 
 const getDummyClient = (movieOverride?: MF.Movie): Client => {
-  const client: Client = {
-    getMovie: async (): Promise<MF.Movie> => {
-      const movie: MF.Movie = movieOverride ?? { Response: "False" };
-      return movie;
-    },
-
-    getMovieWithYear: async (): Promise<MF.Movie> => {
-      const movie: MF.Movie = movieOverride ?? { Response: "False" };
-      return movie;
-    }
+  const response = async (): Promise<MF.Movie> => {
+    const movie: MF.Movie = movieOverride ?? { Response: "False" };
+    return movie;
   };
+
+  const client: Client = {
+    getMovie: response,
+    getMovieWithYear: response,
+    getMovieWithID: response
+  };
+
   return client;
 };
 describe("only command given", () => {

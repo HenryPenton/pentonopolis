@@ -13,10 +13,13 @@ const getDummyClient = (overrides?: MF.Movie[]): Client => {
   } else {
     clientFunc.mockResolvedValueOnce({ Response: "False" });
   }
+
   const client: Client = {
     getMovie: clientFunc,
-    getMovieWithYear: clientFunc
+    getMovieWithYear: clientFunc,
+    getMovieWithID: clientFunc
   };
+
   return client;
 };
 describe("only command given", () => {

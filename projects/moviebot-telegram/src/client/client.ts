@@ -8,7 +8,7 @@ export const joiner = (splitString: string[]): string =>
 export interface Client {
   getMovie: (queryString: string) => Promise<Movie>;
   getMovieWithYear: (queryString: string, year: string) => Promise<Movie>;
-  //   getMovieWithID: () => Movie;
+  getMovieWithID: (id: string) => Promise<Movie>;
 }
 
 export type Fetch = typeof fetch;
