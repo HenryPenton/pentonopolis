@@ -37,4 +37,18 @@ describe("youtube trailer client", () => {
       `https://www.youtube.co.uk/watch?v=9876`
     );
   });
+
+  test("Goes to youtube in expected manner", async () => {
+    const fakeFetch: Fetch = jest.fn(async () => {
+      return responseBuilder<YoutubeResponse>({
+        items: [{ id: { videoId: "9876" } }]
+      });
+    });
+
+    await new YoutubeTrailerClient(fakeFetch).getTrailer("some movie");
+
+    expect(fakeFetch).toHaveBeenCalledWith(
+      "https://www.googleapis.com/youtube/v3/search?key=&part=snippet&q=some+movie+movie+trailer"
+    );
+  });
 });

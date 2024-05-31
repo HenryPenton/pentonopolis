@@ -7,19 +7,35 @@ export type YoutubeResponse = {
 export class YoutubeTrailerClient implements TrailerClient {
   constructor(private readonly fetch: Fetch) {}
 
-  getTrailer = async (movieName: string): Promise<string> => {
-    const response = await this.fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&part=snippet&q=${movieName}%20movie%20trailer`
+  private buildSearchURL = (movieName: string): string => {
+    const searchParams = new URLSearchParams();
+    searchParams.set("key", process.env.YOUTUBE_API_KEY || "");
+    searchParams.set("part", `snippet`);
+    searchParams.set("q", `${movieName} movie trailer`);
+    const searchURL = new URL(
+      `?${searchParams.toString()}`,
+      "https://www.googleapis.com/youtube/v3/search"
     );
-    const youtubeResponse = (await response.json()) as YoutubeResponse;
-    const urlSearchParams = new URLSearchParams();
-    urlSearchParams.set("v", youtubeResponse.items[0].id.videoId);
+    return searchURL.toString();
+  };
+
+  private buildTrailerURL = (youtubeResponse: YoutubeResponse): string => {
+    const trailerParams = new URLSearchParams();
+    trailerParams.set("v", youtubeResponse.items[0].id.videoId);
 
     const trailerURL = new URL(
-      `?${urlSearchParams.toString()}`,
+      `?${trailerParams.toString()}`,
       `https://www.youtube.co.uk/watch`
     );
 
     return trailerURL.toString();
+  };
+
+  getTrailer = async (movieName: string): Promise<string> => {
+    const searchURL = this.buildSearchURL(movieName);
+    const response = await this.fetch(searchURL);
+
+    const youtubeResponse = (await response.json()) as YoutubeResponse;
+    return this.buildTrailerURL(youtubeResponse);
   };
 }
