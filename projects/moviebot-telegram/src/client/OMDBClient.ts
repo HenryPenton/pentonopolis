@@ -2,13 +2,24 @@ import { Client, Fetch, Movie } from "./client";
 
 export class OMDBClient implements Client {
   constructor(private readonly fetch: Fetch) {}
+
+  private buildURL = (params: { [key: string]: string }): string => {
+    const parameterMap = new Map(Object.entries(params));
+    const urlSearchParams = new URLSearchParams();
+
+    parameterMap.forEach((parameter, key) => {
+      urlSearchParams.set(key, parameter);
+    });
+    urlSearchParams.set("apikey", process.env.MOVIE_DATABASE_KEY || "");
+
+    const queryString = urlSearchParams.toString();
+    const url = new URL(`?${queryString}`, "http://www.omdbapi.com");
+    return url.toString();
+  };
+
   getMovieWithID = async (id: string): Promise<Movie> => {
-    const splitQuery = id.split(" ");
-    const parsedId = splitQuery.join("%20");
     try {
-      const response = await this.fetch(
-        `http://www.omdbapi.com/?i=${parsedId}&apikey=${process.env.MOVIE_DATABASE_KEY}`
-      );
+      const response = await this.fetch(this.buildURL({ i: id }));
 
       const movie = (await response.json()) as Movie;
 
@@ -19,13 +30,8 @@ export class OMDBClient implements Client {
   };
 
   getMovieWithYear = async (title: string, year: string): Promise<Movie> => {
-    const splitQuery = title.split(" ");
-    const parsedTitle = splitQuery.join("%20");
-
     try {
-      const response = await this.fetch(
-        `http://www.omdbapi.com/?t=${parsedTitle}&y=${year}&apikey=${process.env.MOVIE_DATABASE_KEY}`
-      );
+      const response = await this.fetch(this.buildURL({ t: title, y: year }));
 
       const movie = (await response.json()) as Movie;
 
@@ -36,13 +42,8 @@ export class OMDBClient implements Client {
   };
 
   getMovie = async (title: string): Promise<Movie> => {
-    const splitQuery = title.split(" ");
-    const parsedTitle = splitQuery.join("%20");
-
     try {
-      const response = await this.fetch(
-        `http://www.omdbapi.com/?t=${parsedTitle}&apikey=${process.env.MOVIE_DATABASE_KEY}`
-      );
+      const response = await this.fetch(this.buildURL({ t: title }));
 
       const movie = (await response.json()) as Movie;
 

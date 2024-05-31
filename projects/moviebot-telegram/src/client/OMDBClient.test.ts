@@ -24,7 +24,7 @@ describe("omdb client", () => {
       await client.getMovie("some title");
 
       expect(fakeFetch).toHaveBeenCalledWith(
-        "http://www.omdbapi.com/?t=some%20title&apikey=undefined"
+        "http://www.omdbapi.com/?t=some+title&apikey="
       );
     });
 
@@ -87,7 +87,7 @@ describe("omdb client", () => {
       await client.getMovieWithYear("some title", "1234");
 
       expect(fakeFetch).toHaveBeenCalledWith(
-        "http://www.omdbapi.com/?t=some%20title&y=1234&apikey=undefined"
+        "http://www.omdbapi.com/?t=some+title&y=1234&apikey="
       );
     });
     test("getmovieWithYear sometitle, someyear", async () => {
@@ -155,7 +155,7 @@ describe("omdb client", () => {
       await client.getMovieWithID("some-id");
 
       expect(fakeFetch).toHaveBeenCalledWith(
-        "http://www.omdbapi.com/?i=some-id&apikey=undefined"
+        "http://www.omdbapi.com/?i=some-id&apikey="
       );
     });
     test("getMovieById some id", async () => {
