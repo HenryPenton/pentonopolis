@@ -19,10 +19,6 @@ export type Movie = {
   imdbID?: string;
   Ratings?: Rating[];
 };
-export const splitter = (queryString: string): string[] =>
-  queryString.split(" ");
-export const joiner = (splitString: string[]): string =>
-  splitString.join("%20");
 
 export interface Client {
   getMovie: (queryString: string) => Promise<Movie>;
