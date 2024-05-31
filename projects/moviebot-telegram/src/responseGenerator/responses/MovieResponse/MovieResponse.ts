@@ -1,13 +1,14 @@
 import { MovieClient, Rating } from "../../../client/movie/movieClient";
+import { TrailerClient } from "../../../client/trailer/trailerClient";
 import { SearchType } from "../../../commands";
-import { getTrailer } from "../../../fetcher/trailer/trailerFetcher";
 import { AsyncMovieResponse } from "../AsyncMovieResponse";
 
 export class MovieResponse extends AsyncMovieResponse {
   constructor(
     queryString: string,
     searchType: SearchType,
-    movieClient: MovieClient
+    movieClient: MovieClient,
+    private readonly trailerClient: TrailerClient
   ) {
     super(queryString, searchType, movieClient);
     this.queryString = queryString;
@@ -70,7 +71,7 @@ export class MovieResponse extends AsyncMovieResponse {
         this.getRatings(movie.Ratings),
         this.getDirector(movie.Director),
         this.getPlot(movie.Plot),
-        await getTrailer(titleAndYear)
+        await this.trailerClient.getTrailer(titleAndYear)
       ];
 
       return this.combineKnownInformation(movieDetails);

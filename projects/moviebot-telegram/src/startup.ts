@@ -1,5 +1,7 @@
 import { Telegraf } from "telegraf";
 import { State } from "./State/State";
+import { OMDBClient } from "./client/movie/OMDBClient";
+import { YoutubeTrailerClient } from "./client/trailer/YoutubeTrailerClient";
 import { stripCommand } from "./commandParser/commandParser";
 import { Commands, SearchType } from "./commands";
 import { CleanupResponse } from "./responseGenerator/responses/CleanupResponse/CleanupResponse";
@@ -15,11 +17,11 @@ import { MovieResponse } from "./responseGenerator/responses/MovieResponse/Movie
 import { RemovieResponse } from "./responseGenerator/responses/RemovieResponse/RemovieResponse";
 import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse/RemoviesResponse";
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
-import { OMDBClient } from "./client/movie/OMDBClient";
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
 const state = new State();
 const omdbClient = new OMDBClient(fetch);
+const trailerClient = new YoutubeTrailerClient(fetch);
 
 bot.command(Commands.movie, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);
@@ -27,7 +29,8 @@ bot.command(Commands.movie, async (ctx) => {
   const builder = new MovieResponse(
     restOfString,
     SearchType.WITH_SEARCH_TERM,
-    omdbClient
+    omdbClient,
+    trailerClient
   );
   const response = await builder.fire();
   ctx.reply(response);
@@ -39,7 +42,8 @@ bot.command(Commands.movieyear, async (ctx) => {
   const builder = new MovieResponse(
     restOfString,
     SearchType.WITH_YEAR,
-    omdbClient
+    omdbClient,
+    trailerClient
   );
   const response = await builder.fire();
   ctx.reply(response);
@@ -51,7 +55,8 @@ bot.command(Commands.movieid, async (ctx) => {
   const builder = new MovieResponse(
     restOfString,
     SearchType.WITH_ID,
-    omdbClient
+    omdbClient,
+    trailerClient
   );
   const response = await builder.fire();
   ctx.reply(response);
