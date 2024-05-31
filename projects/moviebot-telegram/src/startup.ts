@@ -15,14 +15,20 @@ import { MovieResponse } from "./responseGenerator/responses/MovieResponse/Movie
 import { RemovieResponse } from "./responseGenerator/responses/RemovieResponse/RemovieResponse";
 import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse/RemoviesResponse";
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
+import { OMDBClient } from "./client/OMDBClient";
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
 const state = new State();
+const omdbClient = new OMDBClient(fetch);
 
 bot.command(Commands.movie, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);
 
-  const builder = new MovieResponse(restOfString, SearchType.WITH_SEARCH_TERM);
+  const builder = new MovieResponse(
+    restOfString,
+    SearchType.WITH_SEARCH_TERM,
+    omdbClient
+  );
   const response = await builder.fire();
   ctx.reply(response);
 });
@@ -30,7 +36,11 @@ bot.command(Commands.movie, async (ctx) => {
 bot.command(Commands.movieyear, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);
 
-  const builder = new MovieResponse(restOfString, SearchType.WITH_YEAR);
+  const builder = new MovieResponse(
+    restOfString,
+    SearchType.WITH_YEAR,
+    omdbClient
+  );
   const response = await builder.fire();
   ctx.reply(response);
 });
@@ -38,7 +48,11 @@ bot.command(Commands.movieyear, async (ctx) => {
 bot.command(Commands.movieid, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);
 
-  const builder = new MovieResponse(restOfString, SearchType.WITH_ID);
+  const builder = new MovieResponse(
+    restOfString,
+    SearchType.WITH_ID,
+    omdbClient
+  );
   const response = await builder.fire();
   ctx.reply(response);
 });
@@ -49,7 +63,8 @@ bot.command(Commands.setmovie, async (ctx) => {
   const builder = new SetMovieResponse(
     restOfString,
     state,
-    SearchType.WITH_SEARCH_TERM
+    SearchType.WITH_SEARCH_TERM,
+    omdbClient
   );
   const response = await builder.fire();
   ctx.reply(response);
@@ -61,7 +76,8 @@ bot.command(Commands.setmovieyear, async (ctx) => {
   const builder = new SetMovieResponse(
     restOfString,
     state,
-    SearchType.WITH_YEAR
+    SearchType.WITH_YEAR,
+    omdbClient
   );
   const response = await builder.fire();
   ctx.reply(response);
@@ -70,7 +86,12 @@ bot.command(Commands.setmovieyear, async (ctx) => {
 bot.command(Commands.setmovieid, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);
 
-  const builder = new SetMovieResponse(restOfString, state, SearchType.WITH_ID);
+  const builder = new SetMovieResponse(
+    restOfString,
+    state,
+    SearchType.WITH_ID,
+    omdbClient
+  );
   const response = await builder.fire();
   ctx.reply(response);
 });

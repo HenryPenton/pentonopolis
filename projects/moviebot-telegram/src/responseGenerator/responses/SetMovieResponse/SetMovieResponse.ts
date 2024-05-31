@@ -1,3 +1,4 @@
+import { Client } from "../../../client/client";
 import { SearchType } from "../../../commands";
 import { State } from "../../../State/State";
 import { getMovieRatings } from "../../../utils/getMovieRatings";
@@ -11,8 +12,13 @@ export class SetMovieResponse extends AsyncMovieResponse {
   processedMovies: string[];
   moviesToSearchFor: string[];
 
-  constructor(queryString: string, state: State, searchType: SearchType) {
-    super(queryString, searchType);
+  constructor(
+    queryString: string,
+    state: State,
+    searchType: SearchType,
+    client: Client
+  ) {
+    super(queryString, searchType, client);
 
     this.state = state;
     this.completeResponse = "";

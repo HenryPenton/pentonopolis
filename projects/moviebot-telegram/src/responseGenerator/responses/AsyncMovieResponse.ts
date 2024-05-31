@@ -1,6 +1,6 @@
+import { Client } from "../../client/client";
 import { SearchType } from "../../commands";
 import {
-  getMovie,
   getMovieWithID,
   getMovieWithYear,
   Movie
@@ -15,7 +15,11 @@ export abstract class AsyncMovieResponse extends Response {
   movie: Movie;
   searchType: SearchType;
   queryString: string;
-  constructor(queryString: string, searchType: SearchType) {
+  constructor(
+    queryString: string,
+    searchType: SearchType,
+    private readonly client: Client
+  ) {
     super();
     this.movie = {};
     this.queryString = queryString;
@@ -41,7 +45,7 @@ export abstract class AsyncMovieResponse extends Response {
 
       case SearchType.WITH_SEARCH_TERM:
         if (noQueryString) throw new MovieNotProvidedError();
-        return getMovie(this.queryString);
+        return this.client.getMovie(this.queryString);
     }
   };
 

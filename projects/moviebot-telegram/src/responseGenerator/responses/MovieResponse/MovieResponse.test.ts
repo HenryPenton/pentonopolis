@@ -1,36 +1,52 @@
+import { Client } from "../../../client/client";
 import { SearchType } from "../../../commands";
 import * as MF from "../../../fetcher/movie/movieFetcher";
 import { MovieResponse } from "./MovieResponse";
 
+const getDummyClient = (movieOverride?: MF.Movie): Client => {
+  const client: Client = {
+    getMovie: async (): Promise<MF.Movie> => {
+      const movie: MF.Movie = movieOverride ?? { Response: "False" };
+      return movie;
+    }
+  };
+  return client;
+};
 describe("only command given", () => {
   test("only movie command given", async () => {
-    const mR = new MovieResponse("", SearchType.WITH_SEARCH_TERM);
+    const client = getDummyClient();
+    const mR = new MovieResponse("", SearchType.WITH_SEARCH_TERM, client);
 
     expect(await mR.fire()).toBe("Please specify a movie!");
   });
 
   test("only movieyear command given", async () => {
-    const mR = new MovieResponse("", SearchType.WITH_YEAR);
+    const client = getDummyClient();
+    const mR = new MovieResponse("", SearchType.WITH_YEAR, client);
 
     expect(await mR.fire()).toBe("Please specify a movie and year!");
   });
 
   test("only movieid command given", async () => {
-    const mR = new MovieResponse("", SearchType.WITH_ID);
+    const client = getDummyClient();
+    const mR = new MovieResponse("", SearchType.WITH_ID, client);
 
     expect(await mR.fire()).toBe("Please specify an IMDB ID!");
   });
 
   test("only movieid command given", async () => {
-    const mR = new MovieResponse("", SearchType.WITH_ID);
+    const client = getDummyClient();
+    const mR = new MovieResponse("", SearchType.WITH_ID, client);
 
     expect(await mR.fire()).toBe("Please specify an IMDB ID!");
   });
 
   test("non existent state", async () => {
+    const client = getDummyClient();
     const mR = new MovieResponse(
       "",
-      "some non existent search type" as unknown as SearchType
+      "some non existent search type" as unknown as SearchType,
+      client
     );
 
     expect(await mR.fire()).toBe("Something went wrong!");
@@ -39,7 +55,8 @@ describe("only command given", () => {
 
 describe("movie responses with just title", () => {
   test("get a movie by imdb id", async () => {
-    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID);
+    const client = getDummyClient();
+    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
     jest
       .spyOn(MF, "getMovieWithID")
       .mockResolvedValueOnce({ Title: "thingy movie", imdbID: "tt12345457" });
@@ -47,13 +64,23 @@ describe("movie responses with just title", () => {
   }, 10000);
 
   test("get a movie by title", async () => {
-    const mR = new MovieResponse("Finding nemo", SearchType.WITH_SEARCH_TERM);
-    jest.spyOn(MF, "getMovie").mockResolvedValueOnce({ Title: "Finding nemo" });
+    const client = getDummyClient({ Title: "Finding nemo" });
+    const mR = new MovieResponse(
+      "Finding nemo",
+      SearchType.WITH_SEARCH_TERM,
+      client
+    );
+
     expect(await mR.fire()).toBe("Movie: Finding nemo");
   });
 
   test("get a movie by with year", async () => {
-    const mR = new MovieResponse("thingy movie (1996)", SearchType.WITH_YEAR);
+    const client = getDummyClient();
+    const mR = new MovieResponse(
+      "thingy movie (1996)",
+      SearchType.WITH_YEAR,
+      client
+    );
     jest
       .spyOn(MF, "getMovieWithYear")
       .mockResolvedValueOnce({ Title: "thingy movie" });
@@ -70,7 +97,8 @@ describe("movie responses with other information", () => {
     Year: "1995"
   };
   test("get a movie by imdb id", async () => {
-    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID);
+    const client = getDummyClient();
+    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
     jest.spyOn(MF, "getMovieWithID").mockResolvedValueOnce({
       Title: "thingy movie",
       imdbID: "tt12345457",
@@ -82,17 +110,28 @@ describe("movie responses with other information", () => {
   });
 
   test("get a movie by title", async () => {
-    const mR = new MovieResponse("Finding nemo", SearchType.WITH_SEARCH_TERM);
-    jest
-      .spyOn(MF, "getMovie")
-      .mockResolvedValueOnce({ Title: "Finding Nemo", ...genericMovieInfo });
+    const client = getDummyClient({
+      Title: "Finding Nemo",
+      ...genericMovieInfo
+    });
+    const mR = new MovieResponse(
+      "Finding nemo",
+      SearchType.WITH_SEARCH_TERM,
+      client
+    );
+
     expect(await mR.fire()).toBe(
       `Movie: Finding Nemo (1995)\n\nRuntime: runtime\n\nsource: value\n\nDirector: director\n\nPlot: dude where is my automobile`
     );
   });
 
   test("get a movie by with year", async () => {
-    const mR = new MovieResponse("thingy movie (1996)", SearchType.WITH_YEAR);
+    const client = getDummyClient();
+    const mR = new MovieResponse(
+      "thingy movie (1996)",
+      SearchType.WITH_YEAR,
+      client
+    );
     jest
       .spyOn(MF, "getMovieWithYear")
       .mockResolvedValueOnce({ Title: "thingy movie", ...genericMovieInfo });
@@ -114,7 +153,8 @@ describe("movie responses with other information", () => {
     Year: "1995"
   };
   test("movie with multiple ratings", async () => {
-    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID);
+    const client = getDummyClient();
+    const mR = new MovieResponse("tt12345457", SearchType.WITH_ID, client);
     jest.spyOn(MF, "getMovieWithID").mockResolvedValueOnce({
       Title: "thingy movie",
       imdbID: "tt12345457",
@@ -128,7 +168,12 @@ describe("movie responses with other information", () => {
 
 describe("unknown movie", () => {
   test("no response movie", async () => {
-    const mR = new MovieResponse("thingy movie (1996)", SearchType.WITH_YEAR);
+    const client = getDummyClient();
+    const mR = new MovieResponse(
+      "thingy movie (1996)",
+      SearchType.WITH_YEAR,
+      client
+    );
 
     jest
       .spyOn(MF, "getMovieWithYear")
@@ -138,7 +183,12 @@ describe("unknown movie", () => {
   });
 
   test("no title movie", async () => {
-    const mR = new MovieResponse("thingy movie (1996)", SearchType.WITH_YEAR);
+    const client = getDummyClient();
+    const mR = new MovieResponse(
+      "thingy movie (1996)",
+      SearchType.WITH_YEAR,
+      client
+    );
 
     jest
       .spyOn(MF, "getMovieWithYear")
