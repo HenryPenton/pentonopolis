@@ -7,8 +7,8 @@ An open movie database bot written in typescript.
 
 ```javascript
 //index.js
-import { init } from "moviebot-telegram";
-init();
+import { launchBot } from "moviebot-telegram";
+launchBot();
 ```
 
 ```bash
