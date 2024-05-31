@@ -14,7 +14,7 @@ export abstract class AsyncMovieResponse extends Response {
   constructor(
     queryString: string,
     searchType: SearchType,
-    private readonly client: MovieClient
+    private readonly movieClient: MovieClient
   ) {
     super();
     this.movie = {};
@@ -33,15 +33,18 @@ export abstract class AsyncMovieResponse extends Response {
 
         querySplit.pop();
         const queryStringWithoutYear = querySplit.join(" ");
-        return this.client.getMovieWithYear(queryStringWithoutYear, movieYear);
+        return this.movieClient.getMovieWithYear(
+          queryStringWithoutYear,
+          movieYear
+        );
       }
       case SearchType.WITH_ID:
         if (noQueryString) throw new MovieIDNotProvided();
-        return this.client.getMovieWithID(this.queryString);
+        return this.movieClient.getMovieWithID(this.queryString);
 
       case SearchType.WITH_SEARCH_TERM:
         if (noQueryString) throw new MovieNotProvidedError();
-        return this.client.getMovie(this.queryString);
+        return this.movieClient.getMovie(this.queryString);
     }
   };
 

@@ -16,9 +16,9 @@ export class SetMovieResponse extends AsyncMovieResponse {
     queryString: string,
     state: State,
     searchType: SearchType,
-    client: MovieClient
+    movieClient: MovieClient
   ) {
-    super(queryString, searchType, client);
+    super(queryString, searchType, movieClient);
 
     this.state = state;
     this.completeResponse = "";

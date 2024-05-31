@@ -7,9 +7,9 @@ export class MovieResponse extends AsyncMovieResponse {
   constructor(
     queryString: string,
     searchType: SearchType,
-    client: MovieClient
+    movieClient: MovieClient
   ) {
-    super(queryString, searchType, client);
+    super(queryString, searchType, movieClient);
     this.queryString = queryString;
   }
 
