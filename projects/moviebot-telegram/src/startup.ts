@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Telegraf } from "telegraf";
 import { State } from "./State/State";
 import { stripCommand } from "./commandParser/commandParser";
