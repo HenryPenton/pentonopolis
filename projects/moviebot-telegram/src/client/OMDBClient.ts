@@ -1,11 +1,10 @@
-import { joiner, splitter } from "../utils/string/string";
 import { Client, Fetch, Movie } from "./client";
 
 export class OMDBClient implements Client {
   constructor(private readonly fetch: Fetch) {}
   getMovieWithID = async (id: string): Promise<Movie> => {
-    const splitQuery = splitter(id, " ");
-    const parsedId = joiner(splitQuery, "%20");
+    const splitQuery = id.split(" ");
+    const parsedId = splitQuery.join("%20");
     try {
       const response = await this.fetch(
         `http://www.omdbapi.com/?i=${parsedId}&apikey=${process.env.MOVIE_DATABASE_KEY}`
@@ -20,8 +19,8 @@ export class OMDBClient implements Client {
   };
 
   getMovieWithYear = async (title: string, year: string): Promise<Movie> => {
-    const splitQuery = splitter(title, " ");
-    const parsedTitle = joiner(splitQuery, "%20");
+    const splitQuery = title.split(" ");
+    const parsedTitle = splitQuery.join("%20");
 
     try {
       const response = await this.fetch(
@@ -37,8 +36,8 @@ export class OMDBClient implements Client {
   };
 
   getMovie = async (title: string): Promise<Movie> => {
-    const splitQuery = splitter(title, " ");
-    const parsedTitle = joiner(splitQuery, "%20");
+    const splitQuery = title.split(" ");
+    const parsedTitle = splitQuery.join("%20");
 
     try {
       const response = await this.fetch(
