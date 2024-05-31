@@ -1,3 +1,4 @@
+import { getDummyConfig } from "../../config/dummyConfig";
 import { Fetch } from "../fetch";
 import { Movie } from "./movieClient";
 import { OMDBClient } from "./OMDBClient";
@@ -21,11 +22,11 @@ describe("omdb client", () => {
         });
       });
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       await client.getMovie("some title");
 
       expect(fakeFetch).toHaveBeenCalledWith(
-        "http://www.omdbapi.com/?t=some+title&apikey="
+        "http://www.omdbapi.com/?t=some+title&apikey=some-movie-database-key"
       );
     });
 
@@ -36,7 +37,7 @@ describe("omdb client", () => {
           Response: "true"
         });
       };
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = { Title: "some-title", Response: "true" };
 
       expect(await client.getMovie("some title")).toEqual(expectedMovie);
@@ -50,7 +51,7 @@ describe("omdb client", () => {
         });
       };
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = {
         Title: "some-other-title",
         Response: "true"
@@ -64,7 +65,7 @@ describe("omdb client", () => {
         throw new Error("something went wrong");
       };
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = {
         Response: "False"
       };
@@ -84,11 +85,11 @@ describe("omdb client", () => {
         });
       });
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       await client.getMovieWithYear("some title", "1234");
 
       expect(fakeFetch).toHaveBeenCalledWith(
-        "http://www.omdbapi.com/?t=some+title&y=1234&apikey="
+        "http://www.omdbapi.com/?t=some+title&y=1234&apikey=some-movie-database-key"
       );
     });
     test("getmovieWithYear sometitle, someyear", async () => {
@@ -98,7 +99,7 @@ describe("omdb client", () => {
           Response: "true"
         });
       };
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = { Title: "some-title", Response: "true" };
 
       expect(await client.getMovieWithYear("some title", "1234")).toEqual(
@@ -114,7 +115,7 @@ describe("omdb client", () => {
         });
       };
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = {
         Title: "some-other-title",
         Response: "true"
@@ -129,7 +130,7 @@ describe("omdb client", () => {
         throw new Error("something went wrong");
       };
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = {
         Response: "False"
       };
@@ -152,11 +153,11 @@ describe("omdb client", () => {
         });
       });
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       await client.getMovieWithID("some-id");
 
       expect(fakeFetch).toHaveBeenCalledWith(
-        "http://www.omdbapi.com/?i=some-id&apikey="
+        "http://www.omdbapi.com/?i=some-id&apikey=some-movie-database-key"
       );
     });
     test("getMovieById some id", async () => {
@@ -166,7 +167,7 @@ describe("omdb client", () => {
           Response: "true"
         });
       };
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = { Title: "some-title", Response: "true" };
 
       expect(await client.getMovieWithID("some-id")).toEqual(expectedMovie);
@@ -180,7 +181,7 @@ describe("omdb client", () => {
         });
       };
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = {
         Title: "some-other-title",
         Response: "true"
@@ -195,7 +196,7 @@ describe("omdb client", () => {
         throw new Error("something went wrong");
       };
 
-      const client = new OMDBClient(fakeFetch);
+      const client = new OMDBClient(fakeFetch, getDummyConfig());
       const expectedMovie: Movie = {
         Response: "False"
       };

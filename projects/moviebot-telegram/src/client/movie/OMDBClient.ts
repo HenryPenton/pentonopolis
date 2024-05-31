@@ -1,8 +1,12 @@
+import { IConfig } from "../../config/config";
 import { Fetch } from "../fetch";
 import { Movie, MovieClient } from "./movieClient";
 
 export class OMDBClient implements MovieClient {
-  constructor(private readonly fetch: Fetch) {}
+  constructor(
+    private readonly fetch: Fetch,
+    private readonly config: IConfig
+  ) {}
 
   private buildURL = (params: { [key: string]: string }): string => {
     const parameterMap = new Map(Object.entries(params));
@@ -11,7 +15,10 @@ export class OMDBClient implements MovieClient {
     parameterMap.forEach((parameter, key) => {
       urlSearchParams.set(key, parameter);
     });
-    urlSearchParams.set("apikey", process.env.MOVIE_DATABASE_KEY || "");
+    urlSearchParams.set(
+      "apikey",
+      this.config.getConfigurationVariable("movieDatabaseKey")
+    );
 
     const queryString = urlSearchParams.toString();
     const url = new URL(`?${queryString}`, "http://www.omdbapi.com");

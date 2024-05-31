@@ -14,7 +14,7 @@ export const getDummyConfig = (overrides: Overrides = {}): IConfig => {
     },
     [
       {
-        MOVIE_DATABASE_KEY: "some-database-key",
+        MOVIE_DATABASE_KEY: "some-movie-database-key",
         TELEGRAM_BOT_TOKEN: "some-token",
         ...overrides
       }

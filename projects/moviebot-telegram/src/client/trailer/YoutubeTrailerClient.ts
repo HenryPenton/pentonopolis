@@ -12,7 +12,8 @@ export class YoutubeTrailerClient implements TrailerClient {
   ) {}
 
   private buildSearchURL = (movieName: string): string => {
-    const { youtubeApiKey } = this.config.getConfigurationVariables();
+    const youtubeApiKey =
+      this.config.getConfigurationVariableOrUndefined("youtubeApiKey");
     const searchParams = new URLSearchParams();
     searchParams.set("key", youtubeApiKey || "");
     searchParams.set("part", `snippet`);

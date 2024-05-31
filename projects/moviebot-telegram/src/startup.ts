@@ -20,8 +20,10 @@ import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
 
 const bot = new Telegraf(config.getConfigurationVariable("telegramBotToken"));
+
 const state = new State();
-const omdbClient = new OMDBClient(fetch);
+
+const omdbClient = new OMDBClient(fetch, config);
 const trailerClient = new YoutubeTrailerClient(fetch, config);
 
 bot.command(Commands.movie, async (ctx) => {
@@ -130,10 +132,10 @@ bot.command(Commands.cleanup, (ctx) => {
 
 bot.command(Commands.moviepoll, (ctx) => {
   const builder = new GetMoviePollResponse(state);
-
+  const anonymousPolls =
+    config.getConfigurationVariableOrUndefined("anonymousPolls");
   const pollsAreAnonymous =
-    process.env.ANONYMOUS_POLLS === undefined ||
-    process.env.ANONYMOUS_POLLS.toLowerCase() === "true";
+    anonymousPolls === undefined || anonymousPolls === "true";
 
   try {
     const optionsSets = builder.fire();
