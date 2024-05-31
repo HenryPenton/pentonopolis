@@ -1,6 +1,6 @@
 {
   "name": "moviebot-telegram",
-  "version": "6.10.15",
+  "version": "6.10.16",
   "description": "A moviebot for telegram",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
