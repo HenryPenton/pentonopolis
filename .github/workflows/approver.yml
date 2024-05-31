@@ -36,7 +36,7 @@ jobs:
 
             if [ $(echo $running_runs | jq 'length') -gt 0 ]; then
               echo "There are currently running runs, approval will not be triggered."
-              sleep 60
+              sleep 10
             elif [ $(echo $pending_runs | jq 'length') -gt 0 ]; then
               # Sort pending runs by creation date and get the oldest one
               oldest_triggering_workflow_run=$(echo $pending_runs | jq -r 'sort_by(.triggering_workflow_run.started_at) | reverse | .[0]')
