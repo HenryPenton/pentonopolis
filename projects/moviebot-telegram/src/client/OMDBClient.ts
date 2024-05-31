@@ -1,5 +1,4 @@
-import { Movie } from "../fetcher/movie/movieFetcher";
-import { Client, Fetch, splitter, joiner } from "./client";
+import { Client, Fetch, Movie, joiner, splitter } from "./client";
 
 export class OMDBClient implements Client {
   constructor(private readonly fetch: Fetch) {}

@@ -1,6 +1,6 @@
-import { Client } from "../../client/client";
+import { Client, Movie } from "../../client/client";
 import { SearchType } from "../../commands";
-import { Movie } from "../../fetcher/movie/movieFetcher";
+
 import { Response } from "./Response";
 
 export class MovieNotProvidedError extends Error {}

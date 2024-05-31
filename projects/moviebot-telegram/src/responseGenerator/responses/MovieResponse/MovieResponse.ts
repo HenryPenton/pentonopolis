@@ -1,6 +1,5 @@
-import { Client } from "../../../client/client";
+import { Client, Rating } from "../../../client/client";
 import { SearchType } from "../../../commands";
-import { Rating } from "../../../fetcher/movie/movieFetcher";
 import { getTrailer } from "../../../fetcher/trailer/trailerFetcher";
 import { AsyncMovieResponse } from "../AsyncMovieResponse";
 

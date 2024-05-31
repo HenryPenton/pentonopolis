@@ -1,10 +1,9 @@
-import { Client } from "../../../client/client";
+import { Client, Movie } from "../../../client/client";
 import { SearchType } from "../../../commands";
-import * as MF from "../../../fetcher/movie/movieFetcher";
 import { State } from "../../../State/State";
 import { SetMovieResponse } from "./SetMovieResponse";
 
-const getDummyClient = (overrides?: MF.Movie[]): Client => {
+const getDummyClient = (overrides?: Movie[]): Client => {
   const clientFunc = jest.fn();
   if (overrides) {
     overrides?.forEach((override) => {
@@ -175,7 +174,7 @@ describe("unknown movie", () => {
 });
 
 describe("movie responses with other information", () => {
-  const genericMovieInfo: Partial<MF.Movie> = {
+  const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
     Director: "director",
     Ratings: [{ Source: "sriracha", Value: "tasty" }],
@@ -205,7 +204,7 @@ describe("movie responses with other information", () => {
 });
 
 describe("multi movie", () => {
-  const genericMovieInfo: Partial<MF.Movie> = {
+  const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
     Director: "director",
     Ratings: [{ Source: "sriracha", Value: "tasty" }],

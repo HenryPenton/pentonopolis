@@ -1,4 +1,4 @@
-import { Movie } from "../fetcher/movie/movieFetcher";
+import { Movie } from "../client/client";
 
 export const getMovieRatings = (movie: Movie): string | undefined => {
   let setMovieRating;

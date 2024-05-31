@@ -1,11 +1,10 @@
-import { Client } from "../../../client/client";
+import { Client, Movie } from "../../../client/client";
 import { SearchType } from "../../../commands";
-import * as MF from "../../../fetcher/movie/movieFetcher";
 import { MovieResponse } from "./MovieResponse";
 
-const getDummyClient = (movieOverride?: MF.Movie): Client => {
-  const response = async (): Promise<MF.Movie> => {
-    const movie: MF.Movie = movieOverride ?? { Response: "False" };
+const getDummyClient = (movieOverride?: Movie): Client => {
+  const response = async (): Promise<Movie> => {
+    const movie: Movie = movieOverride ?? { Response: "False" };
     return movie;
   };
 
@@ -93,7 +92,7 @@ describe("movie responses with just title", () => {
 });
 
 describe("movie responses with other information", () => {
-  const genericMovieInfo: Partial<MF.Movie> = {
+  const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
     Director: "director",
     Ratings: [{ Source: "source", Value: "value" }],
@@ -147,7 +146,7 @@ describe("movie responses with other information", () => {
 });
 
 describe("movie responses with other information", () => {
-  const genericMovieInfo: Partial<MF.Movie> = {
+  const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
     Director: "director",
     Ratings: [
