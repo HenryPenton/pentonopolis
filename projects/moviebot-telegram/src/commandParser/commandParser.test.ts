@@ -7,9 +7,15 @@ describe("strip command", () => {
     expect(x).toEqual("");
   });
 
-  test("it strips the command from a string with other words in it", () => {
+  test("it strips the command from a string with another word in it", () => {
     const x = stripCommand("/abc xyz");
 
     expect(x).toEqual("xyz");
+  });
+
+  test("it strips the command from a string with other words in it", () => {
+    const x = stripCommand("/abc xyz qfp");
+
+    expect(x).toEqual("xyz qfp");
   });
 });
