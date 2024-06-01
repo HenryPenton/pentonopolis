@@ -1,6 +1,6 @@
-import { IConfig } from "../../config/config";
-import { Fetch } from "../fetch";
-import { TrailerClient } from "./trailerClient";
+import { IConfig } from "../../../config/config";
+import { Fetch } from "../../fetch";
+import { TrailerClient } from "../trailerClient";
 
 export type YoutubeResponse = {
   items: { id: { videoId: string } }[];

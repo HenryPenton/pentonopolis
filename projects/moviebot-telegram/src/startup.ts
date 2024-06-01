@@ -1,7 +1,7 @@
 import { Telegraf } from "telegraf";
 import { State } from "./State/State";
 import { OMDBClient } from "./client/movie/OMDBClient";
-import { YoutubeTrailerClient } from "./client/trailer/YoutubeTrailerClient";
+import { youtubeTrailerClientBuilder } from "./client/trailer/youtube/youtubeTrailerClientBuilder";
 import { stripCommand } from "./commandParser/commandParser";
 import { Commands, SearchType } from "./commands";
 import { config } from "./config/config";
@@ -24,11 +24,7 @@ const bot = new Telegraf(config.getConfigurationVariable("telegramBotToken"));
 const state = new State();
 
 const omdbClient = new OMDBClient(fetch, config);
-const trailerClient = config.getConfigurationVariableOrUndefined(
-  "youtubeApiKey"
-)
-  ? new YoutubeTrailerClient(fetch, config)
-  : undefined;
+const trailerClient = youtubeTrailerClientBuilder(config);
 
 bot.command(Commands.movie, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);

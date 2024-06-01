@@ -1,5 +1,5 @@
-import { getDummyConfig } from "../../config/dummyConfig";
-import { Fetch } from "../fetch";
+import { getDummyConfig } from "../../../config/dummyConfig";
+import { Fetch } from "../../fetch";
 import { YoutubeResponse, YoutubeTrailerClient } from "./YoutubeTrailerClient";
 
 describe("youtube trailer client", () => {
