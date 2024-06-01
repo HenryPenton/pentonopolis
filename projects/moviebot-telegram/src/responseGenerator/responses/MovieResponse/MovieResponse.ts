@@ -8,7 +8,7 @@ export class MovieResponse extends AsyncMovieResponse {
     queryString: string,
     searchType: SearchType,
     movieClient: MovieClient,
-    private readonly trailerClient: TrailerClient
+    private readonly trailerClient?: TrailerClient
   ) {
     super(queryString, searchType, movieClient);
     this.queryString = queryString;
@@ -70,9 +70,12 @@ export class MovieResponse extends AsyncMovieResponse {
         this.getRuntime(movie.Runtime),
         this.getRatings(movie.Ratings),
         this.getDirector(movie.Director),
-        this.getPlot(movie.Plot),
-        await this.trailerClient.getTrailer(titleAndYear)
+        this.getPlot(movie.Plot)
       ];
+
+      if (this.trailerClient) {
+        movieDetails.push(await this.trailerClient.getTrailer(titleAndYear));
+      }
 
       return this.combineKnownInformation(movieDetails);
     } catch (e) {

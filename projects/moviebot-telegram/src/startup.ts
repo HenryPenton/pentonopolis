@@ -24,7 +24,11 @@ const bot = new Telegraf(config.getConfigurationVariable("telegramBotToken"));
 const state = new State();
 
 const omdbClient = new OMDBClient(fetch, config);
-const trailerClient = new YoutubeTrailerClient(fetch, config);
+const trailerClient = config.getConfigurationVariableOrUndefined(
+  "youtubeApiKey"
+)
+  ? new YoutubeTrailerClient(fetch, config)
+  : undefined;
 
 bot.command(Commands.movie, async (ctx) => {
   const restOfString = stripCommand(ctx.message.text);
