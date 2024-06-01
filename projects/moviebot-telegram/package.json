@@ -41,7 +41,7 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.(t|j)sx?$": "ts-jest"
+      "^.+\\.(t|j)sx?$": "@swc/jest"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/mockingFunctions/mocks.ts",
@@ -66,7 +66,8 @@
     "@stryker-mutator/jest-runner": "8.x",
     "@stryker-mutator/typescript-checker": "8.x",
     "jest": "29.x",
-    "ts-jest": "29.x",
+    "@swc/core": "1.x",
+    "@swc/jest": "0.2.x",
     "esbuild": "0.21.4",
     "typescript": "5.x"
   },
