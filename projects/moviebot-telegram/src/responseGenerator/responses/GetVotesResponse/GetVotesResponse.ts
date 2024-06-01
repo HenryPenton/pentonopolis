@@ -13,13 +13,11 @@ export class GetVotesResponse extends LocalResponse {
       .getPolls()
       .sort((a, b) => b.voter_count - a.voter_count);
 
-    if (movieVotes.length === 0) return this.noVotesResponse;
-
     let currentMaxVote = 0;
     let allVotes = "";
 
-    for (let index = 0; index < movieVotes.length; index++) {
-      const { text, voter_count } = movieVotes[index];
+    for (const vote of movieVotes) {
+      const { text, voter_count } = vote;
       const numberOfVotes = voter_count;
 
       const noVotes = numberOfVotes === 0;

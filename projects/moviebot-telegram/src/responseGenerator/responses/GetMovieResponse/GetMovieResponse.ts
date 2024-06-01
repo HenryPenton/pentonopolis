@@ -8,19 +8,12 @@ export class GetMovieResponse extends LocalResponse {
 
   fire = (): string => {
     const movieSelection = this.state.getMovies();
-    if (movieSelection.length === 0) {
-      return "No movies have been set yet";
-    } else {
-      let movies = "";
-      movieSelection.forEach((movie, index) => {
-        const indexedMovie = `${index + 1}. ${movie}`;
-        if (index === 0) {
-          movies = indexedMovie;
-        } else {
-          movies = `${movies}\n${indexedMovie}`;
-        }
-      });
-      return movies;
-    }
+    const movies = movieSelection.map(
+      (movie, index) => `${index + 1}. ${movie}`
+    );
+
+    return movies.length === 0
+      ? "No movies have been set yet"
+      : movies.join("\n");
   };
 }
