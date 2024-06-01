@@ -1,4 +1,4 @@
-import { MovieClient, Rating } from "../../../client/movie/movieClient";
+import { Movie, MovieClient, Rating } from "../../../client/movie/movieClient";
 import { TrailerClient } from "../../../client/trailer/trailerClient";
 import { SearchType } from "../../../commands";
 import { AsyncMovieResponse } from "../AsyncMovieResponse";
@@ -14,68 +14,52 @@ export class MovieResponse extends AsyncMovieResponse {
     this.queryString = queryString;
   }
 
-  private getPlot = (plot?: string): string => (plot ? `Plot: ${plot}` : "");
-
-  private getDirector = (director?: string): string =>
-    director ? `Director: ${director}` : "";
-
-  private getRuntime = (runtime?: string): string =>
-    runtime ? `Runtime: ${runtime}` : "";
+  private getPlot = (plot: string): string => `Plot: ${plot}`;
+  private getDirector = (director: string): string => `Director: ${director}`;
+  private getRuntime = (runtime: string): string => `Runtime: ${runtime}`;
 
   private getTitleAndYear = (title?: string, year?: string): string => {
-    const movieYear = year;
-    const movieTitle = movieYear
-      ? `Movie: ${title} (${year})`
-      : `Movie: ${title}`;
+    const movieTitle = year ? `Movie: ${title} (${year})` : `Movie: ${title}`;
 
     return movieTitle;
   };
 
-  private getRatings = (ratings?: Rating[]): string => {
+  private getRatings = (ratings: Rating[]): string => {
     let allRatings = "";
-    if (ratings) {
-      ratings.forEach((rating, index) => {
-        allRatings = `${allRatings}${index === 0 ? "" : "\n"}${
-          rating.Source
-        }: ${rating.Value}`;
-      });
-    }
+
+    ratings.forEach((rating, index) => {
+      allRatings = `${allRatings}${index === 0 ? "" : "\n"}${
+        rating.Source
+      }: ${rating.Value}`;
+    });
+
     return allRatings;
   };
 
-  private combineKnownInformation = (infoArray: string[]): string => {
-    let info = "";
-    infoArray.forEach((element, index) => {
-      if (index === 0) {
-        info = element;
-      } else if (element !== "") {
-        info = `${info}\n\n${element}`;
-      }
-    });
+  private combineKnownInformation = (infoArray: string[]): string =>
+    infoArray.join("\n\n");
 
-    return info;
+  private getMovieDetails = async (movie: Movie): Promise<string[]> => {
+    const titleAndYear = this.getTitleAndYear(movie.Title, movie.Year);
+
+    const movieDetails: string[] = [titleAndYear];
+    if (movie.Runtime) movieDetails.push(this.getRuntime(movie.Runtime));
+    if (movie.Ratings) movieDetails.push(this.getRatings(movie.Ratings));
+    if (movie.Director) movieDetails.push(this.getDirector(movie.Director));
+    if (movie.Plot) movieDetails.push(this.getPlot(movie.Plot));
+
+    if (this.trailerClient)
+      movieDetails.push(await this.trailerClient.getTrailer(titleAndYear));
+
+    return movieDetails;
   };
 
   fire = async (): Promise<string> => {
     try {
       const movie = await this.getMovie();
 
-      if (movie.Response === "False" || movie.Title === undefined)
-        return "Unknown movie";
-
-      const titleAndYear = this.getTitleAndYear(movie.Title, movie.Year);
-
-      const movieDetails: string[] = [
-        titleAndYear,
-        this.getRuntime(movie.Runtime),
-        this.getRatings(movie.Ratings),
-        this.getDirector(movie.Director),
-        this.getPlot(movie.Plot)
-      ];
-
-      if (this.trailerClient) {
-        movieDetails.push(await this.trailerClient.getTrailer(titleAndYear));
-      }
+      if (movie.Title === undefined) return "Unknown movie";
+      const movieDetails = await this.getMovieDetails(movie);
 
       return this.combineKnownInformation(movieDetails);
     } catch (e) {
