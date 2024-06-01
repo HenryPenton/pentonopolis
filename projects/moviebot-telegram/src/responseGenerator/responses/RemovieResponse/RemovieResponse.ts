@@ -25,9 +25,8 @@ export class RemovieResponse extends LocalResponse {
       .getMovies()
       .findIndex((movie) => movie.toLowerCase().startsWith(this.movieToRemove));
 
-    if (indexToRemove === undefined) return this.unfoundResponse;
-
     const idToRemove = indexToRemove + 1;
+
     return this.removeById(idToRemove);
   };
 
