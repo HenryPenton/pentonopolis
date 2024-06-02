@@ -19,7 +19,7 @@
       "cache": true
     },
     "test:compile": {
-      "dependsOn": ["^test:compile"],
+      "dependsOn": ["^test:compile", "build"],
       "cache": true
     },
     "test:coverage": {
