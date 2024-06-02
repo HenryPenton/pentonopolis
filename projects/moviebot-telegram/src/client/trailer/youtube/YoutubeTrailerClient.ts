@@ -8,6 +8,7 @@ export type YoutubeResponse = {
 export class YoutubeTrailerClient implements TrailerClient {
   private readonly apiKey: string;
   private readonly searchURL: string;
+  private readonly watchURL: string;
 
   constructor(
     private readonly fetch: Fetch,
@@ -19,6 +20,7 @@ export class YoutubeTrailerClient implements TrailerClient {
 
     this.apiKey = youtubeApiKey;
     this.searchURL = config.getConfigurationVariable("youtubeSearchURL");
+    this.watchURL = config.getConfigurationVariable("youtubeWatchURL");
   }
 
   private buildSearchURL = (movieName: string): string => {
@@ -35,10 +37,7 @@ export class YoutubeTrailerClient implements TrailerClient {
     const trailerParams = new URLSearchParams();
     trailerParams.set("v", youtubeResponse.items[0].id.videoId);
 
-    const trailerURL = new URL(
-      `?${trailerParams.toString()}`,
-      `https://www.youtube.co.uk/watch`
-    );
+    const trailerURL = new URL(`?${trailerParams.toString()}`, this.watchURL);
 
     return trailerURL.toString();
   };

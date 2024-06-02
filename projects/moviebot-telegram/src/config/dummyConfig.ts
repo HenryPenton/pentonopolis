@@ -8,6 +8,7 @@ export const getDummyConfig = (overrides: Overrides = {}): IConfig => {
     MOVIE_DATABASE_KEY: "some-movie-database-key",
     TELEGRAM_BOT_TOKEN: "some-token",
     YOUTUBE_SEARCH_URL: "https://yt-search.com",
+    YOUTUBE_WATCH_URL: "https://yt-watch.com",
 
     ...overrides
   };
@@ -20,7 +21,8 @@ export const getDummyConfig = (overrides: Overrides = {}): IConfig => {
     {
       movieDatabaseKey: "MOVIE_DATABASE_KEY",
       telegramBotToken: "TELEGRAM_BOT_TOKEN",
-      youtubeSearchURL: "YOUTUBE_SEARCH_URL"
+      youtubeSearchURL: "YOUTUBE_SEARCH_URL",
+      youtubeWatchURL: "YOUTUBE_WATCH_URL"
     },
     [dataSource]
   );

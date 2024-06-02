@@ -39,7 +39,7 @@ describe("youtube trailer client", () => {
     );
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
-      `https://www.youtube.co.uk/watch?v=1234`
+      `https://yt-watch.com/?v=1234`
     );
   });
 
@@ -55,7 +55,7 @@ describe("youtube trailer client", () => {
     );
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
-      `https://www.youtube.co.uk/watch?v=9876`
+      `https://yt-watch.com/?v=9876`
     );
   });
 

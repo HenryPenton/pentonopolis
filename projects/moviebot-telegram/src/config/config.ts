@@ -12,7 +12,8 @@ export const config = new Configuration(
   {
     movieDatabaseKey: "MOVIE_DATABASE_KEY",
     telegramBotToken: "TELEGRAM_BOT_TOKEN",
-    youtubeSearchURL: "YOUTUBE_SEARCH_URL"
+    youtubeSearchURL: "YOUTUBE_SEARCH_URL",
+    youtubeWatchURL: "YOUTUBE_WATCH_URL"
   },
   [coreConfig, process.env]
 );
