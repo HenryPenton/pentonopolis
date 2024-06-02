@@ -1,15 +1,8 @@
 import { Configuration } from "config-captain";
 
-const required = {
-  movieDatabaseKey: "MOVIE_DATABASE_KEY",
-  telegramBotToken: "TELEGRAM_BOT_TOKEN"
+const coreConfig = {
+  YOUTUBE_SEARCH_URL: "https://www.googleapis.com/youtube/v3/search"
 };
-const optional = {
-  youtubeApiKey: "YOUTUBE_API_KEY",
-  anonymousPolls: "ANONYMOUS_POLLS"
-};
-
-export type AllConfig = typeof optional & typeof required;
 
 export const config = new Configuration(
   {
@@ -18,9 +11,10 @@ export const config = new Configuration(
   },
   {
     movieDatabaseKey: "MOVIE_DATABASE_KEY",
-    telegramBotToken: "TELEGRAM_BOT_TOKEN"
+    telegramBotToken: "TELEGRAM_BOT_TOKEN",
+    youtubeSearchURL: "YOUTUBE_SEARCH_URL"
   },
-  [process.env]
+  [coreConfig, process.env]
 );
 
 export type IConfig = typeof config;

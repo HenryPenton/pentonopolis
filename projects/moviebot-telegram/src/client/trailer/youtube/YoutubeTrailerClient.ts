@@ -7,6 +7,8 @@ export type YoutubeResponse = {
 };
 export class YoutubeTrailerClient implements TrailerClient {
   private readonly apiKey: string;
+  private readonly searchURL: string;
+
   constructor(
     private readonly fetch: Fetch,
     config: IConfig
@@ -16,6 +18,7 @@ export class YoutubeTrailerClient implements TrailerClient {
     if (!youtubeApiKey) throw new YoutubeAPIKeyMissingError();
 
     this.apiKey = youtubeApiKey;
+    this.searchURL = config.getConfigurationVariable("youtubeSearchURL");
   }
 
   private buildSearchURL = (movieName: string): string => {
@@ -23,10 +26,7 @@ export class YoutubeTrailerClient implements TrailerClient {
     searchParams.set("key", this.apiKey);
     searchParams.set("part", `snippet`);
     searchParams.set("q", `${movieName} movie trailer`);
-    const searchURL = new URL(
-      `?${searchParams.toString()}`,
-      "https://www.googleapis.com/youtube/v3/search"
-    );
+    const searchURL = new URL(`?${searchParams.toString()}`, this.searchURL);
 
     return searchURL.toString();
   };

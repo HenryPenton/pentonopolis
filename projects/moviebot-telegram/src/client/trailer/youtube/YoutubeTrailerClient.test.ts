@@ -72,7 +72,7 @@ describe("youtube trailer client", () => {
     ).getTrailer("some movie");
 
     expect(fakeFetch).toHaveBeenCalledWith(
-      "https://www.googleapis.com/youtube/v3/search?key=api-key&part=snippet&q=some+movie+movie+trailer"
+      "https://yt-search.com/?key=api-key&part=snippet&q=some+movie+movie+trailer"
     );
   });
 });
