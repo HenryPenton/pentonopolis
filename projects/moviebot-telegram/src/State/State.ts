@@ -65,20 +65,25 @@ export class State {
   };
 
   makeUnique = (): void => {
-    const uniqueMovies: Movie[] = [];
-    const uniqueMovieTitles: string[] = [];
+    const uniqueMovies: Set<Movie> = new Set();
+    const uniqueMovieIds: Set<string> = new Set();
 
-    this.movies.forEach((movie) => {
+    for (const movie of this.movies) {
       if (movie.imdbID) {
-        if (!uniqueMovieTitles.includes(movie.imdbID)) {
-          uniqueMovies.push(movie);
-          uniqueMovieTitles.push(movie.imdbID);
-        }
+        uniqueMovieIds.add(movie.imdbID);
       } else {
-        uniqueMovies.push(movie);
+        uniqueMovies.add(movie);
       }
+    }
+
+    uniqueMovieIds.forEach((uniqueMovieId) => {
+      const movieFromId = this.movies.find(
+        (movie) => movie.imdbID === uniqueMovieId
+      );
+
+      if (movieFromId) uniqueMovies.add(movieFromId);
     });
 
-    this.movies = uniqueMovies;
+    this.movies = Array.from(uniqueMovies);
   };
 }
