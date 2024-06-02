@@ -13,6 +13,19 @@ describe("youtube trailer client", () => {
     return response;
   };
 
+  test("throws if youtube api key not provided", async () => {
+    const fakeFetch: Fetch = jest.fn(async () => {
+      return responseBuilder<YoutubeResponse>({
+        items: [{ id: { videoId: "1234" } }]
+      });
+    });
+
+    const youtubeClient = (): YoutubeTrailerClient =>
+      new YoutubeTrailerClient(fakeFetch, getDummyConfig({}));
+
+    expect(youtubeClient).toThrow();
+  });
+
   test("Gets a trailer for some movie", async () => {
     const fakeFetch: Fetch = jest.fn(async () => {
       return responseBuilder<YoutubeResponse>({
@@ -20,7 +33,10 @@ describe("youtube trailer client", () => {
       });
     });
 
-    const youtubeClient = new YoutubeTrailerClient(fakeFetch, getDummyConfig());
+    const youtubeClient = new YoutubeTrailerClient(
+      fakeFetch,
+      getDummyConfig({ YOUTUBE_API_KEY: "api-key" })
+    );
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
       `https://www.youtube.co.uk/watch?v=1234`
@@ -33,7 +49,10 @@ describe("youtube trailer client", () => {
         items: [{ id: { videoId: "9876" } }]
       });
     });
-    const youtubeClient = new YoutubeTrailerClient(fakeFetch, getDummyConfig());
+    const youtubeClient = new YoutubeTrailerClient(
+      fakeFetch,
+      getDummyConfig({ YOUTUBE_API_KEY: "api-key" })
+    );
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
       `https://www.youtube.co.uk/watch?v=9876`
@@ -47,12 +66,13 @@ describe("youtube trailer client", () => {
       });
     });
 
-    await new YoutubeTrailerClient(fakeFetch, getDummyConfig()).getTrailer(
-      "some movie"
-    );
+    await new YoutubeTrailerClient(
+      fakeFetch,
+      getDummyConfig({ YOUTUBE_API_KEY: "api-key" })
+    ).getTrailer("some movie");
 
     expect(fakeFetch).toHaveBeenCalledWith(
-      "https://www.googleapis.com/youtube/v3/search?key=&part=snippet&q=some+movie+movie+trailer"
+      "https://www.googleapis.com/youtube/v3/search?key=api-key&part=snippet&q=some+movie+movie+trailer"
     );
   });
 });

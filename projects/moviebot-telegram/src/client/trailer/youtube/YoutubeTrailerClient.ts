@@ -6,16 +6,21 @@ export type YoutubeResponse = {
   items: { id: { videoId: string } }[];
 };
 export class YoutubeTrailerClient implements TrailerClient {
+  private readonly apiKey: string;
   constructor(
     private readonly fetch: Fetch,
-    private readonly config: IConfig
-  ) {}
+    config: IConfig
+  ) {
+    const youtubeApiKey =
+      config.getConfigurationVariableOrUndefined("youtubeApiKey");
+    if (!youtubeApiKey) throw new YoutubeAPIKeyMissingError();
+
+    this.apiKey = youtubeApiKey;
+  }
 
   private buildSearchURL = (movieName: string): string => {
-    const youtubeApiKey =
-      this.config.getConfigurationVariableOrUndefined("youtubeApiKey");
     const searchParams = new URLSearchParams();
-    searchParams.set("key", youtubeApiKey || "");
+    searchParams.set("key", this.apiKey);
     searchParams.set("part", `snippet`);
     searchParams.set("q", `${movieName} movie trailer`);
     const searchURL = new URL(
@@ -46,3 +51,5 @@ export class YoutubeTrailerClient implements TrailerClient {
     return this.buildTrailerURL(youtubeResponse);
   };
 }
+
+class YoutubeAPIKeyMissingError extends Error {}
