@@ -17,6 +17,7 @@ const config = {
     "@stryker-mutator/typescript-checker"
   ],
   ignorePatterns: ["dist/**/*"],
+  ignoreStatic: true,
   disableTypeChecks: true
 };
 export default config;

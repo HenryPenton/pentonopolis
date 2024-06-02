@@ -16,6 +16,32 @@ describe("outdated validator", () => {
     expect(validData).toEqual(expectedValidData);
   });
 
+  test("missing current version", () => {
+    const outdatedValidator = new NpmOutdatedValidator();
+
+    const validationAttempt = (): OutdatedData =>
+      outdatedValidator.validate({
+        aaaa: { latest: "2.3.4" }
+      });
+
+    expect(validationAttempt).toThrow(
+      new InvalidDataError("Invalid outdated data")
+    );
+  });
+
+  test("missing latest version", () => {
+    const outdatedValidator = new NpmOutdatedValidator();
+
+    const validationAttempt = (): OutdatedData =>
+      outdatedValidator.validate({
+        aaaa: { current: "2.3.4" }
+      });
+
+    expect(validationAttempt).toThrow(
+      new InvalidDataError("Invalid outdated data")
+    );
+  });
+
   test("returns the data if valid for two dependencies", () => {
     const outdatedValidator = new NpmOutdatedValidator();
 
