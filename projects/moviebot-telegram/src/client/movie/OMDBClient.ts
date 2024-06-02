@@ -21,7 +21,10 @@ export class OMDBClient implements MovieClient {
     );
 
     const queryString = urlSearchParams.toString();
-    const url = new URL(`?${queryString}`, "http://www.omdbapi.com");
+    const url = new URL(
+      `?${queryString}`,
+      this.config.getConfigurationVariable("omdbURL")
+    );
     return url.toString();
   };
 

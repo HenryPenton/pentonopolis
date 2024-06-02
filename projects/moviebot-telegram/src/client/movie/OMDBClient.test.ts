@@ -84,8 +84,9 @@ describe("omdb client", () => {
           Response: "true"
         });
       });
+      const config = getDummyConfig();
 
-      const client = new OMDBClient(fakeFetch, getDummyConfig());
+      const client = new OMDBClient(fakeFetch, config);
       await client.getMovieWithYear("some title", "1234");
 
       expect(fakeFetch).toHaveBeenCalledWith(

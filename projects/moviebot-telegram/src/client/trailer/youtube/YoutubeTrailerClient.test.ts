@@ -35,11 +35,15 @@ describe("youtube trailer client", () => {
 
     const youtubeClient = new YoutubeTrailerClient(
       fakeFetch,
-      getDummyConfig({ YOUTUBE_API_KEY: "api-key" })
+      getDummyConfig({
+        YOUTUBE_API_KEY: "api-key",
+        MOVIE_DATABASE_KEY: "some-movie-database-key",
+        TELEGRAM_BOT_TOKEN: "some-token"
+      })
     );
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
-      `https://yt-watch.com/?v=1234`
+      `https://www.youtube.co.uk/watch?v=1234`
     );
   });
 
@@ -55,7 +59,7 @@ describe("youtube trailer client", () => {
     );
 
     expect(await youtubeClient.getTrailer("some movie")).toEqual(
-      `https://yt-watch.com/?v=9876`
+      `https://www.youtube.co.uk/watch?v=9876`
     );
   });
 
@@ -72,7 +76,7 @@ describe("youtube trailer client", () => {
     ).getTrailer("some movie");
 
     expect(fakeFetch).toHaveBeenCalledWith(
-      "https://yt-search.com/?key=api-key&part=snippet&q=some+movie+movie+trailer"
+      "https://www.googleapis.com/youtube/v3/search?key=api-key&part=snippet&q=some+movie+movie+trailer"
     );
   });
 });

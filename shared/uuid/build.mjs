@@ -9,7 +9,7 @@ const external = Object.keys(dependencies);
 await esbuild.build({
   entryPoints: ["./src/index.ts"],
   bundle: true,
-  minify: true,
+  minify: false,
   outdir: "dist",
   platform: "node",
   target: "node22.2",
