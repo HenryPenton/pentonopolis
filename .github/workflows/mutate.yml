@@ -12,6 +12,8 @@ jobs:
   mutate:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Generate cache keys
         id: cache_keys
         run: |
@@ -21,7 +23,6 @@ jobs:
           echo "npm_dependencies_cache_key=$npm_dependencies_cache_key" >> "$GITHUB_ENV"
           echo "nx_cache_key=$nx_cache_key" >> "$GITHUB_ENV"
 
-      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
