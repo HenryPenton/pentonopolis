@@ -111,7 +111,6 @@ lib
 .stryker-tmp
 mutation.html
 
-
-.nx/cache
+.nx
 audit.json
 outdated.json
