@@ -24,15 +24,18 @@
     "vulnerabilities:check": "pnpm audit --json > audit.json"
   },
   "devDependencies": {
+    "@eslint/js": "9.*",
     "@types/jest": "29.x",
     "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "7.x",
     "@typescript-eslint/parser": "7.x",
-    "eslint": "8.x",
+    "eslint": "9.*",
+    "globals": "15.*",
     "husky": "9.x",
     "nx": "19.x",
     "prettier": "3.x",
-    "typescript": "5.x"
+    "typescript": "5.x",
+    "typescript-eslint": "7.*"
   },
   "keywords": [],
   "author": "",
