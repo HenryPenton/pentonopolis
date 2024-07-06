@@ -13,15 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Generate cache keys
         id: cache_keys
         run: |
           npm_dependencies_cache_key=npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
-          nx_cache_key=${{ runner.os }}-nx-${{ hashFiles('nx.json') }}
-
           echo "npm_dependencies_cache_key=$npm_dependencies_cache_key" >> "$GITHUB_ENV"
-          echo "nx_cache_key=$nx_cache_key" >> "$GITHUB_ENV"
 
       - uses: actions/setup-node@v4
         with:
@@ -40,14 +37,6 @@ jobs:
             **/node_modules
           key: ${{ env.npm_dependencies_cache_key }}
 
-      - name: Restore nx cache
-        id: cache_nx
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            .nx
-          key: ${{ env.nx_cache_key }}
-
       - name: install dependencies
         if: steps.cache_dependencies.outputs.cache-hit != 'true'
         run: pnpm install --frozen-lockfile
@@ -58,18 +47,3 @@ jobs:
         with:
           name: mutation reports
           path: ./**/mutation.html
-
-      - name: Delete existing nx cache
-        run: |
-          gh extension install actions/gh-actions-cache
-          gh actions-cache delete ${{ env.nx_cache_key }} --confirm || true
-        if: steps.cache_nx.outputs.cache-hit == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cache nx
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            .nx
-          key: ${{ env.nx_cache_key }}
