@@ -1,0 +1,74 @@
+{
+  "name": "filter-split",
+  "version": "0.0.0",
+  "description": "A filter extension to get the truthy and falsey sides of a filter",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "node build.mjs",
+    "postbuild": "tsc",
+    "dependencies:check": "pnpm outdated --json > outdated.json || true",
+    "deploy": "pnpm publish",
+    "lint:check": "eslint",
+    "lint": "eslint --fix",
+    "mutate": "stryker run -c stryker.config.json --concurrency 8",
+    "prettier:check": "prettier --check src/*",
+    "prettier": "prettier --write src/*",
+    "release-major": "pnpm version major",
+    "release-minor": "pnpm version minor",
+    "release-patch": "pnpm version patch",
+    "tarball": "pnpm pack",
+    "test:compile": "tsc --project tsconfig-test.json",
+    "test:coverage": "jest --coverage",
+    "test": "jest",
+    "tag:current": "git tag $npm_package_name@$npm_package_version"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "@swc/jest"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/mockingFunctions/mocks.ts",
+      "<rootDir>/old"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec|steps))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "restoreMocks": true,
+    "clearMocks": true,
+    "resetMocks": true
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenryPenton/pentonopolis.git"
+  },
+  "keywords": [
+    "filter",
+    "split"
+  ],
+  "author": "Henry Penton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HenryPenton/pentonopolis/issues"
+  },
+  "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/config-captain#readme",
+  "devDependencies": {
+    "@stryker-mutator/core": "8.x",
+    "@stryker-mutator/jest-runner": "^8.x",
+    "@stryker-mutator/typescript-checker": "8.x",
+    "@swc/core": "1.x",
+    "@swc/jest": "0.2.x",
+    "esbuild": "0.23.0",
+    "jest": "29.x",
+    "typescript": "5.x"
+  }
+}

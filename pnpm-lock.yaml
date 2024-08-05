@@ -72,6 +72,33 @@ importers:
         specifier: 5.x
         version: 5.5.4
 
+  projects/filter-split:
+    devDependencies:
+      '@stryker-mutator/core':
+        specifier: 8.x
+        version: 8.3.0
+      '@stryker-mutator/jest-runner':
+        specifier: ^8.x
+        version: 8.3.0(@stryker-mutator/core@8.3.0)
+      '@stryker-mutator/typescript-checker':
+        specifier: 8.x
+        version: 8.3.0(@stryker-mutator/core@8.3.0)(typescript@5.5.4)
+      '@swc/core':
+        specifier: 1.x
+        version: 1.7.6
+      '@swc/jest':
+        specifier: 0.2.x
+        version: 0.2.36(@swc/core@1.7.6)
+      esbuild:
+        specifier: 0.23.0
+        version: 0.23.0
+      jest:
+        specifier: 29.x
+        version: 29.7.0(@types/node@22.1.0)
+      typescript:
+        specifier: 5.x
+        version: 5.5.4
+
   projects/moviebot-telegram:
     dependencies:
       config-captain:
