@@ -6,5 +6,6 @@ export const filterSplit = <T>(
 ): { matchingFilter: T[]; nonMatchingFilter: T[] } => {
   const matchingFilter = array.filter(predicate);
   const nonMatchingFilter = array.filter((x) => !matchingFilter.includes(x));
+
   return { matchingFilter, nonMatchingFilter };
 };
