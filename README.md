@@ -10,3 +10,4 @@ A monorepo containing all my published NPM modules
 - [Word Frequency Counter](projects/word-frequency-counter/README.md)
 - [Telegram Moviebot](projects/moviebot-telegram/README.md)
 - [NPM Status Messenger](projects/npm-status-messenger/README.md)
+- [Filter Split](projects/filter-split/README.md)
