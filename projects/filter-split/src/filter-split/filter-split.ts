@@ -4,7 +4,7 @@ export const filterSplit = <T>(
   array: T[],
   predicate: Predicate<T>
 ): { matchingFilter: T[]; nonMatchingFilter: T[] } => {
-  //double filter not the speediest way of doing this
+  //this is definitely not the quickest way to do this - consider changing to array reducer?
   const matchingFilter = array.filter(predicate);
   const nonMatchingFilter = array.filter((x) => !matchingFilter.includes(x));
 
