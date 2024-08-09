@@ -60,7 +60,7 @@
   "bugs": {
     "url": "https://github.com/HenryPenton/pentonopolis/issues"
   },
-  "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/config-captain#readme",
+  "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/filter-split#readme",
   "devDependencies": {
     "@stryker-mutator/core": "8.x",
     "@stryker-mutator/jest-runner": "^8.x",
