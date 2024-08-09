@@ -12,6 +12,8 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      publishcount: ${{ steps.publish-count.outputs.publish-count }}
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -29,9 +31,13 @@ jobs:
       - run: |
           count=$(ls -1 "$DIRECTORY"/*.tgz 2>/dev/null | wc -l)
           echo "There are $count .tgz files in the directory."
+          echo "publish-count=$count" >> "$GITHUB_OUTPUT"
         name: count things to publish
+        id: publish-count
 
   publish:
+    needs: [check]
+    if: ${{ needs.check.outputs.publishcount }} !== 0
     runs-on: ubuntu-latest
     environment: NPM
     steps:
