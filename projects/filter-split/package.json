@@ -1,6 +1,6 @@
 {
   "name": "filter-split",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A filter extension to get the truthy and falsey sides of a filter",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
