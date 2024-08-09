@@ -18,6 +18,7 @@ on:
             "moviebot-telegram",
             "who-owes-who",
             "word-frequency-counter",
+            "filter-split",
             "@henrypenton/uuid"
           ]
       deployment-type:
