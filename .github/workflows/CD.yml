@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   check:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     environment: NPM
     steps:
       - uses: actions/setup-node@v4
