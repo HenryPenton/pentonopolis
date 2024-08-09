@@ -37,7 +37,7 @@ jobs:
 
   publish:
     needs: [check]
-    if: ${{ needs.check.outputs.publishcount }} !== 0
+    if: ${{ needs.check.outputs.publishcount }} !== '0'
     runs-on: ubuntu-latest
     environment: NPM
     steps:
