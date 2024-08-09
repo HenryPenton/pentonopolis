@@ -29,7 +29,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
 
       - run: |
-          count=$(ls -1 "$DIRECTORY"/*.tgz 2>/dev/null | wc -l)
+          count=$(ls -1 ./build/*.tgz 2>/dev/null | wc -l)
           echo "There are $count .tgz files in the directory."
           echo "publish-count=$count" >> "$GITHUB_OUTPUT"
         name: count things to publish
