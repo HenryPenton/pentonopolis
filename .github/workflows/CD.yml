@@ -35,8 +35,16 @@ jobs:
         name: count things to publish
         id: publish-count
 
-  publish:
+  filler:
     needs: [check]
+    if: ${{ needs.check.outputs.publishcount }} !== '0'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo filler
+        name: filler
+
+  publish:
+    needs: [filler,check]
     if: ${{ needs.check.outputs.publishcount }} !== '0'
     runs-on: ubuntu-latest
     environment: NPM
