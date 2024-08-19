@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 20",
-
   "compilerOptions": {
     "lib": ["es2022", "DOM"],
     "module": "commonjs",
