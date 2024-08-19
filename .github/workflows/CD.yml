@@ -37,7 +37,7 @@ jobs:
 
   filler:
     needs: [check]
-    if: ${{ needs.check.outputs.publishcount }} !== '0'
+    if: ${{ needs.check.outputs.publishcount }} !== 0
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.check.outputs.publishcount }}
@@ -45,7 +45,7 @@ jobs:
 
   publish:
     needs: [filler,check]
-    if: ${{ needs.check.outputs.publishcount }} !== '0'
+    if: ${{ needs.check.outputs.publishcount }} !== 0
     runs-on: ubuntu-latest
     environment: NPM
     steps:
