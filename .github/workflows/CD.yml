@@ -40,7 +40,7 @@ jobs:
     if: ${{ needs.check.outputs.publishcount }} !== '0'
     runs-on: ubuntu-latest
     steps:
-      - run: echo filler
+      - run: echo ${{ needs.check.outputs.publishcount }}
         name: filler
 
   publish:
