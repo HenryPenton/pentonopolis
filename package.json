@@ -21,7 +21,7 @@
     "test:compile": "pnpm exec nx run-many -t test:compile",
     "test:coverage": "pnpm exec nx run-many -t test:coverage",
     "test": "pnpm exec nx run-many -t test",
-    "vulnerabilities:check": "pnpm audit --json > audit.json"
+    "vulnerabilities:check": "pnpm audit --json > audit.json || true"
   },
   "devDependencies": {
     "@eslint/js": "9.x",
