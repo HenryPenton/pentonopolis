@@ -70,7 +70,7 @@
     "@swc/core": "1.x",
     "@swc/jest": "0.x",
     "jest": "29.x",
-    "esbuild": "0.23.1",
+    "esbuild": "0.24.0",
     "typescript": "5.x"
   },
   "dependencies": {
