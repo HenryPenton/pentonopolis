@@ -92,28 +92,26 @@ describe("Person", () => {
       expect(person.getPaymentHistory()).toEqual(expectedPaymentHistory);
     });
 
-    test("delete payment set by id", () => {
+    test("delete payment set by id when there is one payment set", () => {
       const payingFor1 = new Person();
       const payingFor2 = new Person();
       const person = new Person();
-      person.addPaymentSet(
+      const paymentSetId = person.addPaymentSet(
         new Set([
           { to: payingFor1.id, amount: 123 },
           { to: payingFor2.id, amount: 321 }
         ])
       );
 
-      const paymentSetId = person.getPaymentHistory().entries().next().value[0];
-
       person.deletePaymentSetById(paymentSetId);
       expect(person.getPaymentHistory()).toEqual(new Map());
     });
 
-    test("delete payment set by id", () => {
+    test("delete payment set by id when there are multiple payment sets", () => {
       const payingFor1 = new Person();
       const payingFor2 = new Person();
       const person = new Person();
-      person.addPaymentSet(
+      const paymentSetId = person.addPaymentSet(
         new Set([
           { to: payingFor1.id, amount: 123 },
           { to: payingFor2.id, amount: 321 }
@@ -126,8 +124,6 @@ describe("Person", () => {
           { to: payingFor2.id, amount: 222 }
         ])
       );
-
-      const paymentSetId = person.getPaymentHistory().entries().next().value[0];
 
       person.deletePaymentSetById(paymentSetId);
 
@@ -146,21 +142,13 @@ describe("Person", () => {
       const payingFor1 = new Person();
       const payingFor2 = new Person();
       const person = new Person();
-      person.addPaymentSet(
+      const paymentSetId = person.addPaymentSet(
         new Set([
           { to: payingFor1.id, amount: 123 },
           { to: payingFor2.id, amount: 321 }
         ])
       );
 
-      person.addPaymentSet(
-        new Set([
-          { to: payingFor1.id, amount: 111 },
-          { to: payingFor2.id, amount: 222 }
-        ])
-      );
-
-      const paymentSetId = person.getPaymentHistory().entries().next().value[0];
       const didDelete = person.deletePaymentSetById(paymentSetId);
 
       expect(didDelete).toBeTruthy();
