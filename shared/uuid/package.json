@@ -74,6 +74,6 @@
     "typescript": "5.x"
   },
   "dependencies": {
-    "uuid": "11.0.2"
+    "uuid": "11.0.3"
   }
 }
