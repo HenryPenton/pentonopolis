@@ -5,8 +5,7 @@
   "main": "dist/startup.js",
   "types": "dist/startup.d.ts",
   "scripts": {
-    "build": "node build.mjs",
-    "postbuild": "tsc",
+    "build": "tsc",
     "dependencies:check": "pnpm outdated --json > outdated.json || true",
     "deploy": "pnpm publish",
     "lint:check": "eslint",
@@ -68,7 +67,6 @@
     "jest": "29.x",
     "@swc/core": "1.x",
     "@swc/jest": "0.2.x",
-    "esbuild": "0.24.0",
     "typescript": "5.x"
   },
   "dependencies": {
