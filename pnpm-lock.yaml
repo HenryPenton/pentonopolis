@@ -89,9 +89,6 @@ importers:
       '@swc/jest':
         specifier: 0.2.x
         version: 0.2.37(@swc/core@1.9.2)
-      esbuild:
-        specifier: 0.24.0
-        version: 0.24.0
       jest:
         specifier: 29.x
         version: 29.7.0(@types/node@22.9.1)
