@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "8.x",
     "@typescript-eslint/parser": "8.x",
     "eslint": "9.x",
-    "globals": "15.x",
+    "globals": "16.x",
     "husky": "9.x",
     "nx": "20.x",
     "prettier": "3.x",
