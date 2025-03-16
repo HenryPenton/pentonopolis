@@ -80,7 +80,7 @@ describe("state", () => {
       state.setMovie(testMovie);
 
       expect(writer).toHaveBeenCalledWith(
-        "state.json",
+        "./state.json",
         '[{"Title":"some movie title"}]'
       );
       expect(writer).toHaveBeenCalledTimes(1);
