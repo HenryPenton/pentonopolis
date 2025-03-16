@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { Telegraf } from "telegraf";
 import { State } from "./State/State";
 import { OMDBClient } from "./client/movie/OMDBClient";
@@ -23,7 +23,11 @@ import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
 
 const bot = new Telegraf(config.getConfigurationVariable("telegramBotToken"));
-const fileClient = new FileClient<Movie[]>(readFileSync, writeFileSync);
+const fileClient = new FileClient<Movie[]>(
+  readFileSync,
+  writeFileSync,
+  mkdirSync
+);
 const state = new State(fileClient);
 
 const omdbClient = new OMDBClient(fetch, config);

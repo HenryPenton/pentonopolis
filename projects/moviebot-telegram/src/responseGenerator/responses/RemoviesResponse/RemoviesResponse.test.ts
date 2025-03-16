@@ -4,7 +4,11 @@ import { State } from "../../../State/State";
 import { RemoviesResponse } from "./RemoviesResponse";
 
 describe("removies response", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("expected response", () => {
     const state = new State(dummyFileClient);

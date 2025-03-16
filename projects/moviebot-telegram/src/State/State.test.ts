@@ -5,6 +5,7 @@ import { State } from "./State";
 describe("state", () => {
   const dummyFileClient: FileClient<Movie[]> = new FileClient<Movie[]>(
     jest.fn(),
+    jest.fn(),
     jest.fn()
   );
   test("set and retrieve a movie", () => {
@@ -71,9 +72,11 @@ describe("state", () => {
     test("write state", () => {
       const writer = jest.fn();
       const reader = jest.fn();
+      const pathMaker = jest.fn();
       const fileClient: FileClient<Movie[]> = new FileClient<Movie[]>(
         reader,
-        writer
+        writer,
+        pathMaker
       );
       const state = new State(fileClient);
       const testMovie: Movie = { Title: "some movie title" };
@@ -91,9 +94,12 @@ describe("state", () => {
       const reader = jest
         .fn()
         .mockReturnValue('[{"Title":"some movie title"}]');
+      const pathMaker = jest.fn();
+
       const fileClient: FileClient<Movie[]> = new FileClient<Movie[]>(
         reader,
-        writer
+        writer,
+        pathMaker
       );
       const state = new State(fileClient);
 

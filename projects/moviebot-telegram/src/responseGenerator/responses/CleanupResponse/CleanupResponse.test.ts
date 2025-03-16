@@ -4,7 +4,11 @@ import { State } from "../../../State/State";
 import { CleanupResponse } from "./CleanupResponse";
 
 describe("CleanupResponse", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("response", () => {
     expect(new CleanupResponse(new State(dummyFileClient)).fire()).toBe(

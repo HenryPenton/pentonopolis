@@ -7,7 +7,11 @@ import {
 } from "./GetMoviePollResponse";
 
 describe("GetMoviePollResponse", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("Throws a pollnotreadyerror when there are not enough movies", () => {
     const state = new State(dummyFileClient);

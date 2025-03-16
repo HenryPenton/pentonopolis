@@ -4,7 +4,11 @@ import { State } from "../../../State/State";
 import { GetVotesResponse } from "./GetVotesResponse";
 
 describe("GetVotesResponse", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
   test("handles no votes in state", () => {
     const state = new State(dummyFileClient);
 

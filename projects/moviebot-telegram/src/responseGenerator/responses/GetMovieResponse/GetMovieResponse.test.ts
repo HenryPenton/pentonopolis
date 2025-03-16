@@ -4,7 +4,11 @@ import { State } from "../../../State/State";
 import { GetMovieResponse } from "./GetMovieResponse";
 
 describe("GetMovieResponse", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("response says no movies have been set if no movies have been set", () => {
     const state = new State(dummyFileClient);

@@ -1,10 +1,19 @@
-import { IFileClient, IFileReader, IFileWriter } from "../file";
+import { IFileClient, IFileReader, IFileWriter, IPathMaker } from "../file";
 
 export class FileClient<T> implements IFileClient<T> {
   constructor(
     private readonly fileReader: IFileReader,
-    private readonly fileWriter: IFileWriter
+    private readonly fileWriter: IFileWriter,
+    private readonly folderMaker: IPathMaker
   ) {}
+
+  makePath = (path: string): void => {
+    try {
+      this.folderMaker(path);
+    } catch {
+      //no-op
+    }
+  };
 
   read = (filePath: string): T => {
     try {

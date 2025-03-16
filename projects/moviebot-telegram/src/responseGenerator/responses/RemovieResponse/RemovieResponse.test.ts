@@ -4,7 +4,11 @@ import { State } from "../../../State/State";
 import { RemovieResponse } from "./RemovieResponse";
 
 describe("RemovieResponse", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("responds that it cannot remove a movie that is not in the selection", () => {
     const state = new State(dummyFileClient);

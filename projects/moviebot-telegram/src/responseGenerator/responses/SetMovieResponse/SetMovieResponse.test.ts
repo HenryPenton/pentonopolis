@@ -23,7 +23,11 @@ const getDummyClient = (overrides?: Movie[]): MovieClient => {
   return client;
 };
 describe("only command given", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("only movie command given", async () => {
     const client = getDummyClient();
@@ -94,7 +98,11 @@ describe("only command given", () => {
 });
 
 describe("movie responses with just title", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("get a movie by imdb id", async () => {
     const client = getDummyClient([
@@ -151,7 +159,11 @@ describe("movie responses with just title", () => {
 });
 
 describe("unknown movie", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   test("no response movie", async () => {
     const client = getDummyClient([{ Response: "False" }]);
@@ -181,7 +193,11 @@ describe("unknown movie", () => {
 });
 
 describe("movie responses with other information", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
@@ -213,7 +229,11 @@ describe("movie responses with other information", () => {
 });
 
 describe("multi movie", () => {
-  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+  const dummyFileClient = new FileClient<Movie[]>(
+    jest.fn(),
+    jest.fn(),
+    jest.fn()
+  );
 
   const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",

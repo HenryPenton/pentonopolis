@@ -1,4 +1,4 @@
-import { IFileClient, IFileReader, IFileWriter } from "../file";
+import { IFileClient, IFileReader, IFileWriter, IPathMaker } from "../file";
 import { FileClient } from "./fileClient";
 
 type TestObject = { someKey: string };
@@ -10,9 +10,12 @@ describe("client", () => {
       const dummyReader: IFileReader = jest
         .fn()
         .mockReturnValue('{"someKey":"someValue"}');
+      const dummyFolderMaker: IPathMaker = jest.fn();
+
       const fileClient: IFileClient<TestObject> = new FileClient(
         dummyReader,
-        dummyWriter
+        dummyWriter,
+        dummyFolderMaker
       );
       expect(fileClient.read("file")).toEqual({ someKey: "someValue" });
     });
@@ -22,10 +25,12 @@ describe("client", () => {
       const dummyReader: IFileReader = jest.fn().mockImplementation(() => {
         throw new Error("something went wrong");
       });
+      const dummyFolderMaker: IPathMaker = jest.fn();
 
       const fileClient: IFileClient<TestObject> = new FileClient(
         dummyReader,
-        dummyWriter
+        dummyWriter,
+        dummyFolderMaker
       );
       expect(fileClient.read("file")).toEqual([]);
     });
@@ -37,9 +42,12 @@ describe("client", () => {
       const dummyWriter: IFileWriter = jest
         .fn()
         .mockReturnValue("some file content");
+      const dummyFolderMaker: IPathMaker = jest.fn();
+
       const fileClient: IFileClient<TestObject> = new FileClient(
         dummyReader,
-        dummyWriter
+        dummyWriter,
+        dummyFolderMaker
       );
       const testObjectToWrite: TestObject = {
         someKey: "someValue"
@@ -59,12 +67,48 @@ describe("client", () => {
         throw new Error("something went wrong");
       });
       const dummyReader: IFileReader = jest.fn();
+      const dummyFolderMaker: IPathMaker = jest.fn();
 
       const fileClient: IFileClient<TestObject> = new FileClient(
         dummyReader,
-        dummyWriter
+        dummyWriter,
+        dummyFolderMaker
       );
       expect(() => fileClient.write("file", { someKey: "" })).not.toThrow();
+    });
+  });
+
+  describe("make path", () => {
+    test("the folder maker creates a non existent folder", () => {
+      const dummyReader: IFileReader = jest.fn();
+      const dummyWriter: IFileWriter = jest.fn();
+      const dummyFolderMaker: IPathMaker = jest.fn();
+
+      const fileClient: IFileClient<TestObject> = new FileClient(
+        dummyReader,
+        dummyWriter,
+        dummyFolderMaker
+      );
+
+      fileClient.makePath("some/file/path");
+
+      expect(dummyFolderMaker).toHaveBeenCalledWith("some/file/path");
+      expect(dummyFolderMaker).toHaveBeenCalledTimes(1);
+    });
+
+    test("a failed path creation results in nothing happening", () => {
+      const dummyWriter: IFileWriter = jest.fn();
+      const dummyFolderMaker: IPathMaker = jest.fn().mockImplementation(() => {
+        throw new Error("something went wrong");
+      });
+      const dummyReader: IFileReader = jest.fn();
+
+      const fileClient: IFileClient<TestObject> = new FileClient(
+        dummyReader,
+        dummyWriter,
+        dummyFolderMaker
+      );
+      expect(() => fileClient.makePath("file/path")).not.toThrow();
     });
   });
 });
