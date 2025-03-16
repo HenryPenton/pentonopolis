@@ -1,10 +1,13 @@
+import { readFileSync, writeFileSync } from "fs";
 import { Telegraf } from "telegraf";
 import { State } from "./State/State";
 import { OMDBClient } from "./client/movie/OMDBClient";
+import { Movie } from "./client/movie/movieClient";
 import { youtubeTrailerClientBuilder } from "./client/trailer/youtube/youtubeTrailerClientBuilder";
 import { stripCommand } from "./commandParser/commandParser";
 import { Commands, SearchType } from "./commands";
 import { config } from "./config/config";
+import { FileClient } from "./file/fileClient/fileClient";
 import { CleanupResponse } from "./responseGenerator/responses/CleanupResponse/CleanupResponse";
 import {
   GetMoviePollResponse,
@@ -20,8 +23,8 @@ import { RemoviesResponse } from "./responseGenerator/responses/RemoviesResponse
 import { SetMovieResponse } from "./responseGenerator/responses/SetMovieResponse/SetMovieResponse";
 
 const bot = new Telegraf(config.getConfigurationVariable("telegramBotToken"));
-
-const state = new State();
+const fileClient = new FileClient<Movie[]>(readFileSync, writeFileSync);
+const state = new State(fileClient);
 
 const omdbClient = new OMDBClient(fetch, config);
 const trailerClient = youtubeTrailerClientBuilder(config);

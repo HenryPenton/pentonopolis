@@ -1,5 +1,6 @@
 import { PollOption } from "telegraf/typings/core/types/typegram";
 import { Movie } from "../client/movie/movieClient";
+import { FileClient } from "../file/fileClient/fileClient";
 import { getMovieRatings } from "../utils/getMovieRatings";
 import { removeFromArray } from "../utils/removeFromArray";
 
@@ -9,8 +10,9 @@ export class State {
   private movies: Movie[];
   private polls: PollOption[];
 
-  constructor() {
-    this.movies = [];
+  constructor(private readonly fileClient: FileClient<Movie[]>) {
+    const readMovies = this.fileClient.read("state.json");
+    this.movies = readMovies;
     this.polls = [];
   }
 
@@ -36,6 +38,7 @@ export class State {
 
   setMovie = (movie: Movie): void => {
     this.movies.push(movie);
+    this.fileClient.write("state.json", this.movies);
   };
 
   getMovies = (): string[] => {

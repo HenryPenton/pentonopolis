@@ -1,3 +1,5 @@
+import { Movie } from "../../../client/movie/movieClient";
+import { FileClient } from "../../../file/fileClient/fileClient";
 import { State } from "../../../State/State";
 import {
   GetMoviePollResponse,
@@ -5,8 +7,10 @@ import {
 } from "./GetMoviePollResponse";
 
 describe("GetMoviePollResponse", () => {
+  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+
   test("Throws a pollnotreadyerror when there are not enough movies", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     const responseGenerate = (): void => {
       new GetMoviePollResponse(state).fire();
     };
@@ -17,7 +21,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("resets previous moviepoll votes", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "abcde", imdbID: "tt1234567" });
     state.setMovie({ Title: "edcba", imdbID: "tt7654321" });
     state.updateVotesForPoll([{ voter_count: 1, text: "some film" }]);
@@ -27,7 +31,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("returns a list of lists of strings when there are enough movies", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "abcde", imdbID: "tt1234567" });
     state.setMovie({ Title: "edcba", imdbID: "tt7654321" });
 
@@ -37,7 +41,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("a poll can have ten movies in it", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "abcde" });
     state.setMovie({ Title: "edcba" });
     state.setMovie({ Title: "edcba" });
@@ -66,7 +70,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("12 movies in the selection gets split into two polls of 10 and 2", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "1" });
     state.setMovie({ Title: "2" });
     state.setMovie({ Title: "3" });
@@ -87,7 +91,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("a number of movies that leaves a remainder of 1 when divided by ten, gets split into nines (min poll size is two, so remainder of 1 would get removed)", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "1" });
     state.setMovie({ Title: "2" });
     state.setMovie({ Title: "3" });
@@ -107,7 +111,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("two duplicate movies+ no other movies causes a PollNotReadyError", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "1", imdbID: "same" });
     state.setMovie({ Title: "1", imdbID: "same" });
 
@@ -117,7 +121,7 @@ describe("GetMoviePollResponse", () => {
   });
 
   test("two duplicate movies + 1 other movie raises a poll of two", () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     state.setMovie({ Title: "1", imdbID: "same" });
     state.setMovie({ Title: "1", imdbID: "same" });
     state.setMovie({ Title: "2", imdbID: "different" });

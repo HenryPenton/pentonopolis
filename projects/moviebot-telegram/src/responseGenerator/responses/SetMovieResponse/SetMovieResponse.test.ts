@@ -1,5 +1,6 @@
 import { Movie, MovieClient } from "../../../client/movie/movieClient";
 import { SearchType } from "../../../commands";
+import { FileClient } from "../../../file/fileClient/fileClient";
 import { State } from "../../../State/State";
 import { SetMovieResponse } from "./SetMovieResponse";
 
@@ -22,9 +23,11 @@ const getDummyClient = (overrides?: Movie[]): MovieClient => {
   return client;
 };
 describe("only command given", () => {
+  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+
   test("only movie command given", async () => {
     const client = getDummyClient();
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "",
       state,
@@ -37,7 +40,7 @@ describe("only command given", () => {
 
   test("only movieyear command given", async () => {
     const client = getDummyClient();
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "",
       state,
@@ -52,7 +55,7 @@ describe("only command given", () => {
 
   test("only movieid command given", async () => {
     const client = getDummyClient();
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "",
       state,
@@ -65,7 +68,7 @@ describe("only command given", () => {
 
   test("only movieid command given", async () => {
     const client = getDummyClient();
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "",
       state,
@@ -78,7 +81,7 @@ describe("only command given", () => {
 
   test("non existent state", async () => {
     const client = getDummyClient();
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "",
       state,
@@ -91,6 +94,8 @@ describe("only command given", () => {
 });
 
 describe("movie responses with just title", () => {
+  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+
   test("get a movie by imdb id", async () => {
     const client = getDummyClient([
       {
@@ -98,7 +103,7 @@ describe("movie responses with just title", () => {
         imdbID: "tt12345457"
       }
     ]);
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "tt12345457",
       state,
@@ -114,7 +119,7 @@ describe("movie responses with just title", () => {
 
   test("get a movie by title", async () => {
     const client = getDummyClient([{ Title: "Finding nemo" }]);
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "Finding nemo",
       state,
@@ -130,7 +135,7 @@ describe("movie responses with just title", () => {
 
   test("get a movie by with year", async () => {
     const client = getDummyClient([{ Title: "thingy movie" }]);
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "thingy movie (1996)",
       state,
@@ -146,9 +151,11 @@ describe("movie responses with just title", () => {
 });
 
 describe("unknown movie", () => {
+  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+
   test("no response movie", async () => {
     const client = getDummyClient([{ Response: "False" }]);
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "thingy movie (1996)",
       state,
@@ -161,7 +168,7 @@ describe("unknown movie", () => {
 
   test("no title movie", async () => {
     const client = getDummyClient([{ Title: undefined }]);
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "thingy movie (1996)",
       state,
@@ -174,6 +181,8 @@ describe("unknown movie", () => {
 });
 
 describe("movie responses with other information", () => {
+  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+
   const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
     Director: "director",
@@ -182,7 +191,7 @@ describe("movie responses with other information", () => {
     Year: "1995"
   };
   test("movie with multiple ratings", async () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     const client = getDummyClient([
       {
         Title: "thingy movie",
@@ -204,6 +213,8 @@ describe("movie responses with other information", () => {
 });
 
 describe("multi movie", () => {
+  const dummyFileClient = new FileClient<Movie[]>(jest.fn(), jest.fn());
+
   const genericMovieInfo: Partial<Movie> = {
     Runtime: "runtime",
     Director: "director",
@@ -212,7 +223,7 @@ describe("multi movie", () => {
     Year: "1995"
   };
   test("multiple movies", async () => {
-    const state = new State();
+    const state = new State(dummyFileClient);
     const client = getDummyClient([
       {
         Title: "abcde",
@@ -248,7 +259,7 @@ describe("multi movie", () => {
       { Response: "False" },
       { Response: "False" }
     ]);
-    const state = new State();
+    const state = new State(dummyFileClient);
     const setMovieResponse = new SetMovieResponse(
       "abcde%%edcba%%vwxyz",
       state,
