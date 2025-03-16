@@ -39,6 +39,10 @@ export class State {
 
   setMovie = (movie: Movie): void => {
     this.movies.push(movie);
+    this.dumpState();
+  };
+
+  private dumpState = (): void => {
     this.fileClient.write("./state/state.json", this.movies);
   };
 
@@ -51,6 +55,7 @@ export class State {
 
   removies = (): void => {
     this.movies = [];
+    this.dumpState();
   };
 
   removie = (id: number): string | undefined => {
@@ -66,6 +71,8 @@ export class State {
     if (movie) {
       return movie.Title;
     }
+
+    this.dumpState();
   };
 
   makeUnique = (): void => {
@@ -89,5 +96,6 @@ export class State {
     });
 
     this.movies = Array.from(uniqueMovies);
+    this.dumpState();
   };
 }
