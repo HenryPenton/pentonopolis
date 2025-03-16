@@ -11,7 +11,8 @@ export class State {
   private polls: PollOption[];
 
   constructor(private readonly fileClient: FileClient<Movie[]>) {
-    const readMovies = this.fileClient.read("./state.json");
+    this.fileClient.makePath("./state");
+    const readMovies = this.fileClient.read("./state/state.json");
     this.movies = readMovies;
     this.polls = [];
   }
@@ -38,7 +39,7 @@ export class State {
 
   setMovie = (movie: Movie): void => {
     this.movies.push(movie);
-    this.fileClient.write("./state.json", this.movies);
+    this.fileClient.write("./state/state.json", this.movies);
   };
 
   getMovies = (): string[] => {
