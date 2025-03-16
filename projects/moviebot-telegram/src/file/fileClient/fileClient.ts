@@ -7,10 +7,18 @@ export class FileClient<T> implements IFileClient<T> {
   ) {}
 
   read = (filePath: string): T => {
-    return JSON.parse(this.fileReader(filePath, { encoding: "utf-8" }));
+    try {
+      return JSON.parse(this.fileReader(filePath, { encoding: "utf-8" }));
+    } catch {
+      return JSON.parse("[]");
+    }
   };
 
   write = (filePath: string, data: T): void => {
-    this.fileWriter(filePath, JSON.stringify(data));
+    try {
+      this.fileWriter(filePath, JSON.stringify(data));
+    } catch {
+      //no-op
+    }
   };
 }
