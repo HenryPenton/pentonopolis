@@ -61,9 +61,9 @@
   },
   "homepage": "https://github.com/HenryPenton/pentonopolis/tree/main/projects/telegraf-moviebot#readme",
   "devDependencies": {
-    "@stryker-mutator/core": "8.x",
-    "@stryker-mutator/jest-runner": "8.x",
-    "@stryker-mutator/typescript-checker": "8.x",
+    "@stryker-mutator/core": "9.x",
+    "@stryker-mutator/jest-runner": "9.x",
+    "@stryker-mutator/typescript-checker": "9.x",
     "jest": "29.x",
     "@swc/core": "1.x",
     "@swc/jest": "0.2.x",
