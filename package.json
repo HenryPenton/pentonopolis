@@ -32,7 +32,7 @@
     "eslint": "9.x",
     "globals": "16.x",
     "husky": "9.x",
-    "nx": "20.x",
+    "nx": "21.x",
     "prettier": "3.x",
     "typescript": "5.x",
     "typescript-eslint": "8.x"
