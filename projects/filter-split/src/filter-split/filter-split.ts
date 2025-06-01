@@ -4,9 +4,16 @@ export const filterSplit = <T>(
   array: T[],
   predicate: Predicate<T>
 ): { matchingFilter: T[]; nonMatchingFilter: T[] } => {
-  //this is definitely not the quickest way to do this - consider changing to array reducer?
-  const matchingFilter = array.filter(predicate);
-  const nonMatchingFilter = array.filter((x) => !matchingFilter.includes(x));
+  const matchingFilter: T[] = [];
+  const nonMatchingFilter: T[] = [];
+
+  array.forEach((value, index) => {
+    if (predicate(value, index, array)) {
+      matchingFilter.push(value);
+    } else {
+      nonMatchingFilter.push(value);
+    }
+  });
 
   return { matchingFilter, nonMatchingFilter };
 };
