@@ -68,7 +68,7 @@
     "@stryker-mutator/typescript-checker": "9.x",
     "@swc/core": "1.x",
     "@swc/jest": "0.x",
-    "jest": "29.x",
+    "jest": "30.x",
     "typescript": "5.x"
   },
   "dependencies": {

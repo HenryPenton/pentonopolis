@@ -13,15 +13,23 @@ describe("GetMoviePollResponse", () => {
     jest.fn()
   );
 
-  test("Throws a pollnotreadyerror when there are not enough movies", () => {
+  test("Throws a pollnotreadyerror when there are no movies", () => {
     const state = new State(dummyFileClient);
     const responseGenerate = (): void => {
       new GetMoviePollResponse(state).fire();
     };
-    expect(responseGenerate).toThrowError(PollNotReadyError);
+
+    expect(responseGenerate).toThrow(PollNotReadyError);
+  });
+
+  test("Throws a pollnotreadyerror when there is only one movie", () => {
+    const state = new State(dummyFileClient);
+    const responseGenerate = (): void => {
+      new GetMoviePollResponse(state).fire();
+    };
 
     state.setMovie({ Title: "abcde", imdbID: "tt1234567" });
-    expect(responseGenerate).toThrowError(PollNotReadyError);
+    expect(responseGenerate).toThrow(PollNotReadyError);
   });
 
   test("resets previous moviepoll votes", () => {
@@ -119,9 +127,7 @@ describe("GetMoviePollResponse", () => {
     state.setMovie({ Title: "1", imdbID: "same" });
     state.setMovie({ Title: "1", imdbID: "same" });
 
-    expect(new GetMoviePollResponse(state).fire).toThrowError(
-      PollNotReadyError
-    );
+    expect(new GetMoviePollResponse(state).fire).toThrow(PollNotReadyError);
   });
 
   test("two duplicate movies + 1 other movie raises a poll of two", () => {
